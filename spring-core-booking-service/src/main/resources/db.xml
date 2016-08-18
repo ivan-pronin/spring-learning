@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:c="http://www.springframework.org/schema/c"
+	xsi:schemaLocation="
+ 		http://www.springframework.org/schema/beans
+ 		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+ 		http://www.springframework.org/schema/util
+ 		http://www.springframework.org/schema/util/spring-util-3.2.xsd">
+		
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<constructor-arg ref="dataSource"/>
+	</bean>
+
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="${jdbc.driverClassName}"/>
+		<property name="url" value="${jdbc.url}"/>
+		<property name="username" value="${jdbc.username}"/>
+		<property name="password" value="${jdbc.password}"/>
+
+	</bean>
+
+	<bean id="dbConfigurer"
+		class="epam.spring.university.service.impl.db.DbConfigurer" init-method="init">
+		<constructor-arg ref="jdbcTemplate" />
+	</bean>
+
+	<bean id="bookingService" class="epam.spring.university.service.impl.db.DbBookingServiceImpl">
+		<constructor-arg ref="dbConfigurer"/>
+		<constructor-arg ref="discountService"/>
+		<constructor-arg value="#{auditoriumService.getByName('GrandCinema').getNumberOfSeats()}"/>
+		<constructor-arg ref="ticketService"/>
+		<property name="vipSeatMulitplier" value="${vipSeatMulitplier}"/>
+	</bean>
+	
+	<bean id="auditoriumService" class="epam.spring.university.service.impl.db.DbAuditoriumServiceImpl">
+		<constructor-arg ref="jdbcTemplate"/>
+	</bean>
+	
+	<bean id="datesService" class="epam.spring.university.service.impl.db.DbDatesService">
+		<constructor-arg ref="jdbcTemplate"/>
+	</bean>
+		
+	<bean id="ratingService" class="epam.spring.university.service.impl.db.DbRatingService">
+		<constructor-arg ref="jdbcTemplate"/>
+	</bean>
+				
+	<bean id="eventService" class="epam.spring.university.service.impl.db.DbEventServiceImpl">
+		<constructor-arg ref="jdbcTemplate"/>
+		<constructor-arg ref="datesService"/>
+		<constructor-arg ref="ratingService"/>
+		<constructor-arg ref="auditoriumService"/>
+	</bean>
+	
+	<bean id="ticketService" class="epam.spring.university.service.impl.db.DbTicketServiceImpl">
+		<constructor-arg ref="jdbcTemplate"/>
+		<constructor-arg ref="datesService"/>
+		<constructor-arg ref="userService"/>
+		<constructor-arg ref="eventService"/>
+		<constructor-arg ref="dbConfigurer"/>
+	</bean>
+	
+	<bean id="userService" class="epam.spring.university.service.impl.db.DbUserServiceImpl">
+		<constructor-arg ref="jdbcTemplate"/>
+		<constructor-arg ref="dbConfigurer"/>
+	</bean>
+	
+	<bean id="aopCounterService" class="epam.spring.university.service.impl.db.DbAopCounterServiceImpl">
+		<constructor-arg ref="jdbcTemplate"/>
+	</bean>
+	
+</beans>

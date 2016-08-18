@@ -1,0 +1,14 @@
+[
+	{
+		"id": 1,
+		"name": "Terminator6",
+		"airDates": ["2016-05-25T18:00:00", "2013-03-23T18:00:00"],
+		"basePrice": 50,
+		"auditoriums": {"2016-05-25T18:00:00": {
+												"name": "MoscowVision",
+												"numberOfSeats": 200,
+												"vipSeats": [20,21,22,23,24]
+											   }
+					   }
+	}
+]
