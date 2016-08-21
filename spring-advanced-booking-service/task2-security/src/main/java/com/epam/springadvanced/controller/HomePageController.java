@@ -19,29 +19,16 @@
  */
 package com.epam.springadvanced.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.epam.springadvanced.entity.Booking;
-import com.epam.springadvanced.service.BookingService;
-import com.epam.springadvanced.service.EventService;
-import com.epam.springadvanced.service.UserService;
 
 @Controller
 public class HomePageController
 {
-    @Autowired
-    private BookingService bookingService;
-
-    @Autowired
-    private EventService eventService;
-
-    @Autowired
-    private UserService userService;
-
     public HomePageController()
     {
         super();

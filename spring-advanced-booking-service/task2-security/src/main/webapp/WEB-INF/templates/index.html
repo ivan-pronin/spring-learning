@@ -21,8 +21,18 @@
 			<a href="/event-service.html" th:href="@{/event-service}">Event service</a>
 		</div>
 		
+		<div th:if="${#httpServletRequest.remoteUser != null}">
+    		<h2 th:text="'Hello, ' + ${#httpServletRequest.remoteUser} + '!'">
+    		      sample_user
+    		</h2>
+			<form th:action="@{/logout}" method="post">
+   				<input type="submit" value="Log out" />
+			</form>	    		
+		</div>			
+
 		<div>
 			<h1>This is home page!</h1>
 		</div>
+
 	</body>
 </html>

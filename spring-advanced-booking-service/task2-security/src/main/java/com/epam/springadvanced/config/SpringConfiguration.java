@@ -7,8 +7,11 @@ import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
+import com.epam.springadvanced.config.web.SecurityConfiguration;
+
 @Configuration
-@Import({AspectConfiguration.class, DataConfiguration.class, AuditoriumConfiguration.class})
+@Import({AspectConfiguration.class, DataConfiguration.class, AuditoriumConfiguration.class,
+        SecurityConfiguration.class})
 @PropertySource("classpath:auditorium1.properties")
 @PropertySource("classpath:auditorium2.properties")
 @PropertySource("classpath:auditorium3.properties")

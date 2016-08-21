@@ -49,6 +49,6 @@ public class UserRepositoryTests
     @Test
     public void testUserRepositoryGetAll()
     {
-        Assert.assertEquals(2, userRepository.getAll().size());
+        Assert.assertEquals(4, userRepository.getAll().size());
     }
 }

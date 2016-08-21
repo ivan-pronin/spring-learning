@@ -78,6 +78,8 @@ INSERT INTO role(id,name) VALUES (1,'BOOKING_MANAGER');
 
 INSERT INTO user(id,name, email, birthday, password) VALUES (0,'john','john@gmail.com',date'1980-11-03','$2a$08$l65pz/4gXDQAxgXuVCC.rOzv0MMzlk2JNGFxDwGV2zMsHuAry2Qki');
 INSERT INTO user(id,name, email, birthday, password) VALUES (1,'neo','neo@gmail.com',date'1985-12-08','$2a$08$l65pz/4gXDQAxgXuVCC.rOzv0MMzlk2JNGFxDwGV2zMsHuAry2Qki');
+INSERT INTO user(id,name, email, birthday, password) VALUES (2,'mkyong','user@gmail.com',date'1999-11-23','123456');
+INSERT INTO user(id,name, email, birthday, password) VALUES (3,'admin','admin@gmail.com',date'1999-11-23','admin');
 
 INSERT INTO event(id, name, date, ticketPrice, rating, auditorium_id) VALUES (1, 'Terminator-6','2016-11-03 21:00:00',25.0,2,1);
 INSERT INTO event(id, name, date, ticketPrice, rating, auditorium_id) VALUES (2, 'Matrix-4','2016-11-03 21:00:00',30.0,2,1);
@@ -89,5 +91,6 @@ INSERT INTO ticket(id, price, seat, event_id) VALUES (4, 20, 6, 2);
 INSERT INTO ticket(id, price, seat, event_id) VALUES (5, 20, 7, 2);
 
 INSERT INTO roles(user_id, role_id) VALUES (0,0);
-INSERT INTO roles(user_id, role_id) VALUES (0,1);
-INSERT INTO roles(user_id, role_id) VALUES (1,0);
+INSERT INTO roles(user_id, role_id) VALUES (1,1);
+INSERT INTO roles(user_id, role_id) VALUES (2,0);
+INSERT INTO roles(user_id, role_id) VALUES (3,1);

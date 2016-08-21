@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org" xmlns:tiles="http://www.thymeleaf.org">
+	<head>
+		<title>Spring Advanced Ivan Pronin - Error!</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<link rel="stylesheet" type="text/css" media="all" href="../../css/stsm.css" th:href="@{/css/stsm.css}" />
+		<link rel="stylesheet" type="text/css" media="all" href="../../css/app.css" th:href="@{/css/app.css}" />
+	</head>
+	<body>
+		<div>
+			<img src="../../images/stsmlogo.png" alt="STSM logo" title="STSM logo"
+			th:src="@{/images/stsmlogo.png}" th:alt-title="#{title.application}" />
+		</div>
+		<div>
+		    <h1 th:text="${errorCode}">500</h1>
+    		<p th:text="${errorMessage}">java.lang.NullPointerException</p>
+    	</div>
+	</body>
+</html>

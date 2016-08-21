@@ -1,29 +1,27 @@
-[10:19:43 AM] Igor Seliverstov: В Spring MVC есть спец классы: WebInitializer и его производные для создания красивой точки входа (никаких DispatcherServlet и web.xml)
-[10:20:01 AM] Igor Seliverstov: Деплоим все на Tomcat 8
-FreeMarkerViewResolver  - очень рекомендую использовать Thymeleaf вместо него
-Thymeleaf обладает большими возможностями и у него (что будет видно когда вы с секьюрностью будете работать) лучшая интеграция со спрингом - многое в нем работает прямо из коробки и не требует доп усилий
-
-[10:30:16 AM] Igor Seliverstov: Ну и еще один момент, кто из вас слышал про Spring boot?))
-[10:30:45 AM] Igor Seliverstov: так вот, хоть это и современно, его мы не используем
-[10:30:53 AM] Igor Seliverstov: Пока))
-
- that will return result as PDF document - Советую познакомиться с JasperReports
- Для генерации PDF - быстро, удобно)) Лучше не использовать вью классы (тут многие допускают жуткие ошибки) а просто возвращать стрим со сгенерированым PDF из метода контроллера
- Доп задание - заставить браузер именно загрузить PDF по доп кнопочке не отображая его содержимое во вкладочке (при наличии плагина браузера для просмотра PDF)
- [10:38:02 AM] Igor Seliverstov: ну и не забываем про всякие accept хидеры и мапинги)) Это важно!
-[10:38:06 AM] Igor Seliverstov: Вроде все)))
-
-
 Task description:
 
-1. Based on the codebase of previous hometasks, create a web application, configure Spring MVC application context and dispatcher servlet.
+1. Configure Spring Security for ticket booking web application - add DelegatingFilterProxy to web.xml
 
-2. For all BookingFacde operations implement Spring MVC annotation-based controllers.
+2. Configure access control via security namespace. All application operations should be accessible to users with role RESGISTERED_USER only. Getting booked tickets for particular event should be accessible only to users with role BOOKING_MANAGER. Add two new fields to User entity - password and roles. Roles field should contain comma-separated list of user roles. All users in database should have REGISTERED_USER role by default. Create several test users with additional BOOKING_MANAGER role. 
 
-3. For operations that return one or several entites as a result (e.g. getUserByEmail, getUsersByName, getBookedTickets) implement simple views rendered via Freemarker template engine. Use FreeMarkerViewResolver for view resolving procedure.
+3. Implement form-based login via security namespace, add custom login page, configure DAOAuthenticationProvider and UserDetailsService to load user data from database. Configure logout filter.
 
-4. For operations, that return list of booked tickets (by event, or by user) implement alternative controllers, that will return result as PDF document. Map this controller to a specific value of Accept request header  - Accept=application/pdf
+4. Configure Remember-Me authentication.
 
-5. Implement batch loading of users and events into system. In order to do this, create controller which accepts multipart file upload, parses it and calls BookingFacade methods to add events and users into the system. The format of the file (JSON, XML, ...) is up to you as long as you can implement the correct parsing procedure.
+5. Implement password encoding during authentication. 
 
-6. Implement generic exception handler which should redirect all controller exceptions to simple Freemarker view, that just prints exception message.
+==================
+[17.08.2016 11:59:52] Igor Seliverstov: Коллеги, всем привет! у нас началась вторая неделя (ну да, уже ее середина) и новая порция комментариев уже ко второму заданию!
+[17.08.2016 12:05:14] Igor Seliverstov: Секьюрити... Оч рекомендую посмотреть на такой класс как AbstractSecurityWebApplicationInitializer (еле нашел :D )
+[17.08.2016 12:07:56] Aleksandr Kolesov: у mkyong как раз экземплы с AbstractSecurityWebApplicationInitializer:)
+[17.08.2016 12:08:47] Igor Seliverstov: И еще один замечательный класс - WebSecurityConfigurerAdapter
+[17.08.2016 12:09:52] Igor Seliverstov: Посмотрите экзамплы от самих спрингов про него) Фактически это все что надо сделать по второму заданию - правильно настроить секьюрити в наследнике WebSecurityConfigurerAdapter))
+[17.08.2016 12:10:02] Igor Seliverstov: Ну и @EnableWebSecurity не забыть))
+[17.08.2016 12:11:17] Igor Seliverstov: protected void configure(AuthenticationManagerBuilder auth)
+protected void configure(HttpSecurity http)
+
+Вот эти 2 метода - пристальное внимание)) Дальше - разберетесь)
+[17.08.2016 12:11:56] Igor Seliverstov: UserDetailsService - не надо
+[17.08.2016 12:15:05] Igor Seliverstov: DAOAuthenticationProvider - не надо вместо этого один метод - jdbcAuthentication()
+[17.08.2016 12:16:33] Igor Seliverstov: На структуру таблиц в задании - забить это откровенная лажа перечислять роли через запятую в таблице, это должна быть таблица связанная с юзером а сами роли - из словаря (для упрощения на словарь - тоже забить :D )
+[17.08.2016 12:16:59] Igor Seliverstov: В общем структура таблиц - как вам удобнее))

@@ -5,6 +5,9 @@ set war_dir="d:\Repos\Learning\spring-advanced-2016\output\libs"
 
 call %bin_dir%\shutdown.bat
 timeout /t 1 /nobreak
+
+taskkill /f /im "java.exe"
+
 rd /s /q %app_dir%
 del %tomcat_dir%\webapps\spring-adv-gradle.war /S /Q
 
