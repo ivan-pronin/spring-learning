@@ -11,10 +11,11 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.epam.springadvanced.config.SpringConfiguration;
+import com.epam.springadvanced.config.web.SecurityConfiguration;
 import com.epam.springadvanced.entity.User;
 
 @RunWith(SpringRunner.class)
-@ContextConfiguration(classes = SpringConfiguration.class)
+@ContextConfiguration(classes = {SpringConfiguration.class, SecurityConfiguration.class})
 public class UserRepositoryTests
 {
     @Autowired
@@ -27,8 +28,11 @@ public class UserRepositoryTests
         LocalDate birthDate = LocalDate.parse("2007-12-03");
         String name = "name";
         String email = "email";
+        String password = "password";
         User expected = new User(name, email, birthDate);
+        expected.setPassword(password);
         User actual = userRepository.save(expected);
+        actual.setPassword(password);
         Assert.assertEquals(expected, actual);
     }
 
@@ -40,6 +44,7 @@ public class UserRepositoryTests
         String name = "name";
         String email = "email";
         User expected = new User(1, name, email, birthDate);
+        expected.setPassword("pass");
         userRepository.save(expected);
         int size = userRepository.getAll().size();
         userRepository.delete(1);

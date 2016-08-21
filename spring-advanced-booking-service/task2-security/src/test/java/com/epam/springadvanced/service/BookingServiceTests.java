@@ -12,6 +12,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.epam.springadvanced.config.SpringConfiguration;
+import com.epam.springadvanced.config.web.SecurityConfiguration;
 import com.epam.springadvanced.entity.Auditorium;
 import com.epam.springadvanced.entity.Event;
 import com.epam.springadvanced.entity.Seat;
@@ -24,7 +25,7 @@ import com.epam.springadvanced.service.exception.TicketWithoutEventException;
 import com.epam.springadvanced.service.exception.UserNotRegisteredException;
 
 @RunWith(SpringRunner.class)
-@ContextConfiguration(classes = SpringConfiguration.class)
+@ContextConfiguration(classes = {SpringConfiguration.class, SecurityConfiguration.class})
 public class BookingServiceTests
 {
     @Autowired
@@ -32,12 +33,12 @@ public class BookingServiceTests
 
     @Autowired
     private UserService userService;
-    
+
     @Autowired
     private EventRepository eventRepository;
-    
+
     @Autowired
-    private AuditoriumRepository auditoriumRepository; 
+    private AuditoriumRepository auditoriumRepository;
 
     @DirtiesContext
     @Test
@@ -53,7 +54,7 @@ public class BookingServiceTests
         Auditorium auditorium = auditoriumRepository.getById(1);
         event.setAuditorium(auditorium);
         eventRepository.save(event);
-        Seat seat = new Seat(23);
+        Seat seat = new Seat(5);
         Ticket ticket = new Ticket(event, seat);
         bookingService.bookTicket(user, ticket);
         Collection<Ticket> tickets = bookingService.getTicketsForEvent(event, date);

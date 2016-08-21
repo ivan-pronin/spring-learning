@@ -10,17 +10,16 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.epam.springadvanced.config.SpringConfiguration;
+import com.epam.springadvanced.config.web.SecurityConfiguration;
 import com.epam.springadvanced.entity.Event;
-import com.epam.springadvanced.service.EventService;
-import com.epam.springadvanced.service.Rating;
 
 @RunWith(SpringRunner.class)
-@ContextConfiguration(classes = SpringConfiguration.class)
+@ContextConfiguration(classes = {SpringConfiguration.class, SecurityConfiguration.class})
 public class EventServiceTests
 {
     @Autowired
     private EventService eventService;
-    
+
     @Test
     public void testEventServiceCreate()
     {

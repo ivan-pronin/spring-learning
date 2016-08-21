@@ -10,17 +10,17 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.epam.springadvanced.config.SpringConfiguration;
+import com.epam.springadvanced.config.web.SecurityConfiguration;
 import com.epam.springadvanced.entity.User;
-import com.epam.springadvanced.service.UserService;
 
 @RunWith(SpringRunner.class)
-@ContextConfiguration(classes = SpringConfiguration.class)
+@ContextConfiguration(classes = {SpringConfiguration.class, SecurityConfiguration.class})
 public class UserServiceTests
 {
 
     @Autowired
     private UserService userService;
-    
+
     @Test
     public void testUserServiceCreate()
     {
