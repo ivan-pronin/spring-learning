@@ -1,0 +1,27 @@
+Task description:
+
+1. Configure Spring Security for ticket booking web application - add DelegatingFilterProxy to web.xml
+
+2. Configure access control via security namespace. All application operations should be accessible to users with role RESGISTERED_USER only. Getting booked tickets for particular event should be accessible only to users with role BOOKING_MANAGER. Add two new fields to User entity - password and roles. Roles field should contain comma-separated list of user roles. All users in database should have REGISTERED_USER role by default. Create several test users with additional BOOKING_MANAGER role. 
+
+3. Implement form-based login via security namespace, add custom login page, configure DAOAuthenticationProvider and UserDetailsService to load user data from database. Configure logout filter.
+
+4. Configure Remember-Me authentication.
+
+5. Implement password encoding during authentication. 
+
+==================
+[17.08.2016 11:59:52] Igor Seliverstov: Коллеги, всем привет! у нас началась вторая неделя (ну да, уже ее середина) и новая порция комментариев уже ко второму заданию!
+[17.08.2016 12:05:14] Igor Seliverstov: Секьюрити... Оч рекомендую посмотреть на такой класс как AbstractSecurityWebApplicationInitializer (еле нашел :D )
+[17.08.2016 12:07:56] Aleksandr Kolesov: у mkyong как раз экземплы с AbstractSecurityWebApplicationInitializer:)
+[17.08.2016 12:08:47] Igor Seliverstov: И еще один замечательный класс - WebSecurityConfigurerAdapter
+[17.08.2016 12:09:52] Igor Seliverstov: Посмотрите экзамплы от самих спрингов про него) Фактически это все что надо сделать по второму заданию - правильно настроить секьюрити в наследнике WebSecurityConfigurerAdapter))
+[17.08.2016 12:10:02] Igor Seliverstov: Ну и @EnableWebSecurity не забыть))
+[17.08.2016 12:11:17] Igor Seliverstov: protected void configure(AuthenticationManagerBuilder auth)
+protected void configure(HttpSecurity http)
+
+Вот эти 2 метода - пристальное внимание)) Дальше - разберетесь)
+[17.08.2016 12:11:56] Igor Seliverstov: UserDetailsService - не надо
+[17.08.2016 12:15:05] Igor Seliverstov: DAOAuthenticationProvider - не надо вместо этого один метод - jdbcAuthentication()
+[17.08.2016 12:16:33] Igor Seliverstov: На структуру таблиц в задании - забить это откровенная лажа перечислять роли через запятую в таблице, это должна быть таблица связанная с юзером а сами роли - из словаря (для упрощения на словарь - тоже забить :D )
+[17.08.2016 12:16:59] Igor Seliverstov: В общем структура таблиц - как вам удобнее))
