@@ -44,9 +44,9 @@ public class EventFileUploadController
             List<Event> events = mapper.readValue(in, new TypeReference<List<Event>>()
             {
             });
-            System.out.println(events);
             for (Event event : events)
             {
+                System.out.println("Saving event: " + event);
                 eventRepository.save(event);
             }
             return "upload";

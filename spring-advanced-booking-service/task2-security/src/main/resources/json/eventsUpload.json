@@ -1,13 +1,13 @@
 [
 	{
-		"id": 10,
+		
 		"name": "Uploaded event 10",
 		"dateTime": "2016-10-25T18:00:00",
 		"ticketPrice": 10,
 		"rating": "MID"
 	},
 	{
-		"id": 11,
+		
 		"name": "Uploaded event 11",
 		"dateTime": "2016-11-27T18:00:00",
 		"ticketPrice": 11,
