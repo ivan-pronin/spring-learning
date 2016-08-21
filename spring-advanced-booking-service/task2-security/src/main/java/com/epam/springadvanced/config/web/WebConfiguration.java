@@ -1,5 +1,7 @@
 package com.epam.springadvanced.config.web;
 
+import javax.servlet.annotation.MultipartConfig;
+
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -8,6 +10,8 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.Ordered;
+import org.springframework.web.multipart.MultipartResolver;
+import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
@@ -20,6 +24,7 @@ import org.thymeleaf.templatemode.TemplateMode;
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = "com.epam.springadvanced")
+@MultipartConfig
 public class WebConfiguration extends WebMvcConfigurerAdapter implements ApplicationContextAware
 {
 
@@ -107,5 +112,11 @@ public class WebConfiguration extends WebMvcConfigurerAdapter implements Applica
     {
         registry.addViewController("/login").setViewName("login");
         registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
+    }
+
+    @Bean
+    public MultipartResolver multipartResolver()
+    {
+        return new StandardServletMultipartResolver();
     }
 }

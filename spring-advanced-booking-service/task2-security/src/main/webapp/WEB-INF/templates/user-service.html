@@ -20,6 +20,7 @@
 			<a href="/booking-service.html" th:href="@{/booking-service}">Booking Service</a>
 			<a href="/user-service.html" th:href="@{/user-service}">User Service</a>
 			<a href="/event-service.html" th:href="@{/event-service}">Event service</a>
+			<a href="/upload.html" th:href="@{/upload}">Upload</a>
 		</div>
 		
 		<div th:if="${#httpServletRequest.remoteUser != null}">
@@ -39,7 +40,7 @@
 						<label>
 							<span>User Id</span>
 						</label>
-						<input type="text" th:field="*{id}" /></br>
+						<input type="text" th:field="*{id}" /><br/>
 					</div>
 					<div>
 						<label> Found user: 
@@ -59,7 +60,7 @@
 						<label>
 							<span>User email</span>
 						</label>
-						<input type="text" th:field="*{email}" /></br>
+						<input type="text" th:field="*{email}" /><br/>
 					</div>
 					<div>
 						<label> Found user: 
@@ -72,6 +73,5 @@
 				</fieldset>
 			</form>
 			
-		</div>
 	</body>
 </html>

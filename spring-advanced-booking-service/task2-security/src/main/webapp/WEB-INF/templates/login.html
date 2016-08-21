@@ -19,6 +19,7 @@
 			<a href="/booking-service.html" th:href="@{/booking-service}">Booking Service</a>
 			<a href="/user-service.html" th:href="@{/user-service}">User Service</a>
 			<a href="/event-service.html" th:href="@{/event-service}">Event service</a>
+			<a href="/upload.html" th:href="@{/upload}">Upload</a>
 		</div>
 		
 		<form th:if="${#httpServletRequest.remoteUser != null}" th:action="@{/logout}" method="post">
