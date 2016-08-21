@@ -20,6 +20,7 @@
 			<a href="/booking-service.html" th:href="@{/booking-service}">Booking Service</a>
 			<a href="/user-service.html" th:href="@{/user-service}">User Service</a>
 			<a href="/event-service.html" th:href="@{/event-service}">Event service</a>
+			<a href="/upload.html" th:href="@{/upload}">Upload</a>
 		</div>
 		
 			<h2>Event Facade</h2>
@@ -59,6 +60,21 @@
 					</div>
 					<div class="submit">
 						<button type="submit" name="getEventByName">Get event by name</button>
+					</div>
+				</fieldset>
+			</form>
+			
+			<form action="#" th:action="@{/event-service}" method="post">
+				<fieldset>
+					<legend>Get all events</legend>
+					<div>
+						<label> Found events: 
+              				<span th:text="${searchResult}">found event</span>
+            			</label> 
+					</div>
+					<div class="submit">
+						<button type="submit" name="getAllEvents">Get all events</button>
+						<button type="submit" name="getAllEventsAsPdf">Get all events as PDF</button>
 					</div>
 				</fieldset>
 			</form>

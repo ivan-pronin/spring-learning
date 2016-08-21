@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 @Configuration
 @Import({AspectConfiguration.class, DataConfiguration.class, AuditoriumConfiguration.class})
@@ -19,5 +20,11 @@ public class SpringConfiguration
     public static PropertySourcesPlaceholderConfigurer placeholderConfigurer()
     {
         return new PropertySourcesPlaceholderConfigurer();
+    }
+
+    @Bean
+    public static PathMatchingResourcePatternResolver resourceResolver()
+    {
+        return new PathMatchingResourcePatternResolver();
     }
 }

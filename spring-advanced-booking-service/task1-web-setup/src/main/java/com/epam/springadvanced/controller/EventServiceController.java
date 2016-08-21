@@ -19,6 +19,8 @@
  */
 package com.epam.springadvanced.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -49,16 +51,24 @@ public class EventServiceController
     @RequestMapping(value = "/event-service", params = {"getEventById"})
     public String getEventById(final Event event, final BindingResult bindingResult, final ModelMap model)
     {
-        Event foundevent = eventService.getById(event.getId());
-        ControllerUtils.addResultToModel(model, foundevent);
+        Event foundEvent = eventService.getById(event.getId());
+        ControllerUtils.addResultToModel(model, foundEvent);
         return "event-service";
     }
 
     @RequestMapping(value = "/event-service", params = {"getEventByName"})
     public String getEventByName(final Event event, final BindingResult bindingResult, final ModelMap model)
     {
-        Event foundevent = eventService.getByName(event.getName());
-        ControllerUtils.addResultToModel(model, foundevent);
+        Event foundEvent = eventService.getByName(event.getName());
+        ControllerUtils.addResultToModel(model, foundEvent);
+        return "event-service";
+    }
+    
+    @RequestMapping(value = "/event-service", params = {"getAllEvents"})
+    public String getAllEvents(final Event event, final BindingResult bindingResult, final ModelMap model)
+    {
+        List<Event> foundEvents = (List<Event>) eventService.getAll();
+        ControllerUtils.addResultToModel(model, foundEvents);
         return "event-service";
     }
 }

@@ -62,13 +62,12 @@ public class BookingServiceController
     {
         super();
     }
-    
+
     @RequestMapping(value = "/booking-service")
     public String openMainModelPage(final Booking booking, final BindingResult bindingResult, final ModelMap model)
     {
         return "/booking-service";
     }
-   
 
     @RequestMapping(value = "/booking-service", params = {"getTicketPrice"})
     public String getTicketPrice(final Booking booking, final BindingResult bindingResult, final ModelMap model)
@@ -102,14 +101,17 @@ public class BookingServiceController
         return "booking-service";
     }
 
-    @RequestMapping(value = "/booking-service", params = {"getTickets"})
+    @RequestMapping(value = "/booking-service", params = {"getTicketsByEvent"})
     public String getTickets(final Booking booking, final BindingResult bindingResult, final ModelMap model)
     {
-        Event event = eventService.getById(booking.getEventId());
-        List<Ticket> tickets = (List<Ticket>) bookingService.getTicketsForEvent(event,
-                LocalDateTime.parse(EVENT_1_DATE));
+        List<Ticket> tickets = getTickets(booking);
         model.addAttribute("tickets", tickets);
-        System.out.println(tickets);
         return "booking-service";
+    }
+
+    private List<Ticket> getTickets(final Booking booking)
+    {
+        Event event = eventService.getById(booking.getEventId());
+        return (List<Ticket>) bookingService.getTicketsForEvent(event, LocalDateTime.parse(EVENT_1_DATE));
     }
 }

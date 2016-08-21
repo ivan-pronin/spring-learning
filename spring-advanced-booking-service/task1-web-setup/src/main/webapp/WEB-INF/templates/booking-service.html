@@ -13,14 +13,15 @@
 			<img src="../../images/stsmlogo.png" alt="STSM logo" title="STSM logo"
 			th:src="@{/images/stsmlogo.png}" th:alt-title="#{title.application}" />
 		</div>
-		
+
 		<div class="menu">
 			<a href="/" th:href="@{/}">Home</a>
 			<a href="/booking-service.html" th:href="@{/booking-service}">Booking Service</a>
 			<a href="/user-service.html" th:href="@{/user-service}">User Service</a>
 			<a href="/event-service.html" th:href="@{/event-service}">Event service</a>
+			<a href="/upload.html" th:href="@{/upload}">Upload</a>
 		</div>
-		
+
 		<div>
 			<h2>Booking Facade</h2>
 			<form action="#" th:action="@{/booking-service}" th:object="${booking}" method="post">
@@ -30,11 +31,13 @@
 						<label>
 							<span>Event Id</span>
 						</label>
-						<input type="text" th:field="*{eventId}" /></br>
+						<input type="text" th:field="*{eventId}" />
+						<br/>
 						<label>
 							<span>User Id</span>
 						</label>
-						<input type="text" th:field="*{userId}" /></br>
+						<input type="text" th:field="*{userId}" />
+						<br/>
 						<label>
 							<span>Seats</span>
 						</label>
@@ -42,15 +45,15 @@
 					</div>
 					<div>
 						<label> Ticket price: 
-              				<span th:text="${ticketPrice}">Ticket price</span>
-            			</label> 
+							<span th:text="${ticketPrice}">Ticket price</span>
+						</label> 
 					</div>
 					<div class="submit">
 						<button type="submit" name="getTicketPrice">Get ticket price</button>
 					</div>
 				</fieldset>
 			</form>
-			
+
 			<form action="#" th:action="@{/booking-service}" th:object="${booking}" method="post">
 				<fieldset>
 					<legend>Book ticket</legend>
@@ -58,15 +61,18 @@
 						<label for="eventId">
 							<span>Event Id</span>
 						</label>
-						<input type="text" th:field="*{eventId}" /></br>
+						<input type="text" th:field="*{eventId}" />
+						<br/>
 						<label for="userId">
 							<span>User Id</span>
 						</label>
-						<input type="text" th:field="*{userId}" /></br>
+						<input type="text" th:field="*{userId}" />
+						<br/>
 						<label for="seats">
 							<span>Seats</span>
 						</label>
-						<input type="text" th:field="*{seats}"/></br>
+						<input type="text" th:field="*{seats}"/>
+						<br/>
 						<label for="seats">
 							<span>Vip seats?</span>
 						</label>
@@ -74,15 +80,15 @@
 					</div>
 					<div>
 						<label for="bookResult" > Booking result: 
-              				<span th:text="${bookResult}">Booking result</span>
-            			</label> 
+							<span th:text="${bookResult}">Booking result</span>
+						</label> 
 					</div>
 					<div class="submit">
 						<button type="submit" name="bookTicket">Book ticket</button>
 					</div>
 				</fieldset>
 			</form>
-			
+
 			<form action="#" th:action="@{/booking-service}" th:object="${booking}" method="post">
 				<fieldset>
 					<legend>Get tickets for event</legend>
@@ -91,21 +97,22 @@
 							<span>Event Id</span>
 						</label>
 						<input type="text" th:field="*{eventId}" />
-						
+
 					</div>
 					<div>
 						<label for="tickets" > Tickets: 
-              				<ul >
-            					<li th:each="t : ${tickets}" th:text="${t}"/>
-          					</ul>
-            			</label> 
+							<ul >
+								<li th:each="t : ${tickets}" th:text="${t}"/>
+							</ul>
+						</label> 
 					</div>
 					<div class="submit">
-						<button type="submit" name="getTickets">Get tickets for event</button>
+						<button type="submit" name="getTicketsByEvent">Get tickets for event</button>&nbsp;&nbsp;
+						<button type="submit" name="getEventTicketsPdfView">Get as PDF</button>
 					</div>
 				</fieldset>
 			</form>
-			
+
 		</div>
 	</body>
 </html>

@@ -2,7 +2,8 @@
 
 <html xmlns:th="http://www.thymeleaf.org">
 	<head>
-		<title>Spring Advanced Ivan Pronin - Home</title>
+		<title>Spring Advanced Ivan Pronin - Event Service</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<link rel="stylesheet" type="text/css" media="all" href="../../css/stsm.css" th:href="@{/css/stsm.css}" />
@@ -13,17 +14,46 @@
 			<img src="../../images/stsmlogo.png" alt="STSM logo" title="STSM logo"
 			th:src="@{/images/stsmlogo.png}" th:alt-title="#{title.application}" />
 		</div>
-		
+
 		<div class="menu">
 			<a href="/" th:href="@{/}">Home</a>
 			<a href="/booking-service.html" th:href="@{/booking-service}">Booking Service</a>
 			<a href="/user-service.html" th:href="@{/user-service}">User Service</a>
 			<a href="/event-service.html" th:href="@{/event-service}">Event service</a>
-			<a href="/upload.html" th:href="@{/upload}">Upload</a>
 		</div>
+
+		<h2>Upload files</h2>
+		<form action="#" th:action="@{/upload}" method="post" enctype="multipart/form-data">
+			<fieldset>
+				<legend>Upload events</legend>
+				<div>
+					<label>
+						<span>File location</span>
+					</label>
+					<input type="file" name="file"/>
+
+				</div>
+				<div class="submit">
+					<button type="submit" name="uploadEvents">Upload events</button>
+				</div>
+			</fieldset>
+		</form>
 		
-		<div>
-			<h1>This is home page!</h1>
-		</div>
+		<form action="#" th:action="@{/upload}" method="post" enctype="multipart/form-data">
+			<fieldset>
+				<legend>Upload users</legend>
+				<div>
+					<label>
+						<span>File location</span>
+					</label>
+					<input type="file" name="file"/>
+
+				</div>
+				<div class="submit">
+					<button type="submit" name="uploadUsers">Upload users</button>
+				</div>
+			</fieldset>
+		</form>
+
 	</body>
 </html>

@@ -1,14 +1,22 @@
 package com.epam.springadvanced.config.web;
 
+import java.io.File;
+
 import javax.servlet.Filter;
+import javax.servlet.MultipartConfigElement;
+import javax.servlet.ServletRegistration.Dynamic;
 
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.support.AbstractDispatcherServletInitializer;
 
+import com.epam.springadvanced.config.SpringConfiguration;
+
 public class ServletInitializer extends AbstractDispatcherServletInitializer
 {
+
+    private int maxUploadSizeInMb = 5 * 1024 * 1024; // 5 MB
 
     public ServletInitializer()
     {
@@ -26,6 +34,8 @@ public class ServletInitializer extends AbstractDispatcherServletInitializer
     @Override
     protected WebApplicationContext createRootApplicationContext()
     {
+        final AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
+        context.register(SpringConfiguration.class);
         return null;
     }
 
@@ -44,4 +54,13 @@ public class ServletInitializer extends AbstractDispatcherServletInitializer
         return new Filter[] {encodingFilter};
     }
 
+    @Override
+    protected void customizeRegistration(Dynamic registration)
+    {
+        File uploadDirectory = new File("uploadDirectory");
+        MultipartConfigElement multipartConfigElement = new MultipartConfigElement(uploadDirectory.getAbsolutePath(),
+                maxUploadSizeInMb, maxUploadSizeInMb * 2, maxUploadSizeInMb / 2);
+        registration.setMultipartConfig(multipartConfigElement);
+        super.customizeRegistration(registration);
+    }
 }

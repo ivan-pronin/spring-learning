@@ -1,0 +1,120 @@
+<?xml version="1.0"?>
+<!DOCTYPE jasperTemplate
+  PUBLIC "-//JasperReports//DTD Template//EN"
+  "http://jasperreports.sourceforge.net/dtds/jaspertemplate.dtd">
+
+<jasperReport name = "ticketsReportTemplate">
+
+	<field name = "id" class = "java.lang.Long">
+		<fieldDescription>
+			<![CDATA[id]]>
+		</fieldDescription>
+	</field>
+
+	<field name = "price" class = "java.lang.Float">
+		<fieldDescription>
+			<![CDATA[price]]>
+		</fieldDescription>
+	</field>
+
+	<field name = "eventName" class = "java.lang.String">
+		<fieldDescription>
+			<![CDATA[eventName]]>
+		</fieldDescription>
+	</field>
+	
+	<field name = "eventId" class = "java.lang.Long">
+		<fieldDescription>
+			<![CDATA[eventId]]>
+		</fieldDescription>
+	</field>
+	
+	<field name = "seat" class = "java.lang.Integer">
+		<fieldDescription>
+			<![CDATA[seat]]>
+		</fieldDescription>
+	</field>
+	
+	<title>
+		<band height = "30">
+			<textField>
+				<reportElement x = "0" y = "15" width = "50" height = "15"/>
+				<textFieldExpression class = "java.lang.Long">
+					<![CDATA["Tickets: "]]>
+				</textFieldExpression>
+			</textField>
+		</band>
+	</title>	
+	<columnHeader>
+		<band height = "30">
+
+			<textField>
+				<reportElement x = "0" y = "15" width = "30" height = "15"/>
+				<textFieldExpression class = "java.lang.String">
+					<![CDATA["ID"]]>
+				</textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x = "50" y = "15" width = "50" height = "15"/>
+				<textFieldExpression class = "java.lang.Float">
+					<![CDATA["Price"]]>
+				</textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x = "100" y = "15" width = "50" height = "15"/>
+				<textFieldExpression class = "java.lang.String">
+					<![CDATA["Event name"]]>
+				</textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x = "150" y = "15" width = "50" height = "15"/>
+				<textFieldExpression class = "java.lang.Long">
+					<![CDATA["Event id"]]>
+				</textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x = "200" y = "15" width = "50" height = "15"/>
+				<textFieldExpression class = "java.lang.Integer">
+					<![CDATA["Seat"]]>
+				</textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+
+	<detail>
+		<band height = "30">
+
+			<textField>
+				<reportElement x = "0" y = "0" width = "30" height = "15"/>
+				<textFieldExpression class = "java.lang.String">
+					<![CDATA[$F{id}]]>
+				</textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x = "50" y = "0" width = "50" height = "15"/>
+				<textFieldExpression class = "java.lang.String">
+					<![CDATA[$F{price}]]>
+				</textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x = "100" y = "0" width = "50" height = "15"/>
+				<textFieldExpression class = "java.lang.String">
+					<![CDATA[$F{eventName}]]>
+				</textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x = "150" y = "0" width = "50" height = "15"/>
+				<textFieldExpression class = "java.lang.String">
+					<![CDATA[$F{eventId}]]>
+				</textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x = "200" y = "0" width = "50" height = "15"/>
+				<textFieldExpression class = "java.lang.String">
+					<![CDATA[$F{seat}]]>
+				</textFieldExpression>
+			</textField>			
+		</band>
+	</detail>
+
+</jasperReport>
