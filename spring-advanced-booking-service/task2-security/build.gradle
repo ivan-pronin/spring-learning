@@ -2,6 +2,7 @@ apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'maven'
 apply plugin: 'war'
+apply plugin: 'checkstyle'
 
 war {
 	archiveName 'spring-adv-gradle.war'
@@ -12,6 +13,22 @@ repositories {
 		maven {
 			url 'http://jaspersoft.artifactoryonline.com/jaspersoft/third-party-ce-artifacts/'
 		}
+}
+
+ext.checkstyleConfigDir = "config/checkstyle"
+
+checkstyle {
+    configFile = new File(checkstyleConfigDir, 'checkstyle.xml')
+    configProperties.checkstyleConfigDir = checkstyleConfigDir
+    repositories {
+        maven {
+            url 'http://sevntu-checkstyle.github.com/sevntu.checkstyle/maven2/'
+        }
+    }
+    dependencies {
+        checkstyle(group: 'com.puppycrawl.tools', name: 'checkstyle', version: '7.0')
+        checkstyle(group: 'com.github.sevntu.checkstyle', name: 'sevntu-checks', version: '1.21.0')
+    }
 }
 
 sourceCompatibility = 1.8
