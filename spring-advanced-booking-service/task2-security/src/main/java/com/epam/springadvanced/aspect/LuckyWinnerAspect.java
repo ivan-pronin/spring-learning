@@ -23,7 +23,7 @@ public class LuckyWinnerAspect {
 
     private static final float PRICE = 0F;
     private static final int LUCKY = 5;
-    private static final Logger log = LoggerFactory.getLogger(LuckyWinnerAspect.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(LuckyWinnerAspect.class);
     private Random random = new Random();
 
     @Autowired
@@ -43,7 +43,7 @@ public class LuckyWinnerAspect {
             win.setUser(user);
             winsRepository.save(win);
             ticket.setPrice(PRICE);
-            log.info("User " + user.getName() + " is lucky winner");
+            LOGGER.info("User " + user.getName() + " is lucky winner");
             jp.proceed();
         }
         return jp.proceed();

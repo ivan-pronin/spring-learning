@@ -109,7 +109,6 @@ public class BookingServiceController
         List<Ticket> tickets = (List<Ticket>) bookingService.getTicketsForEvent(event,
                 LocalDateTime.parse(EVENT_1_DATE));
         model.addAttribute("tickets", tickets);
-        System.out.println(tickets);
         return "booking-service";
     }
 }

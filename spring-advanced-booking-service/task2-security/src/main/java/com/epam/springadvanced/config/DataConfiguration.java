@@ -14,7 +14,6 @@ import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 @ComponentScan("com.epam.springadvanced.repository")
 public class DataConfiguration
 {
-
     @Bean
     public DataSource dataSource()
     {

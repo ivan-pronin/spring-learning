@@ -16,7 +16,7 @@ import com.epam.springadvanced.repository.CounterRepository;
 @Component
 public class DiscountAspect {
 
-    private static final Logger log = LoggerFactory.getLogger(DiscountAspect.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DiscountAspect.class);
 
     @Autowired
     private CounterRepository counterRepository;
@@ -33,11 +33,11 @@ public class DiscountAspect {
             String counterName = Counters.DISCOUNT_USER_ID.name() + "_" + user.getId();
             int count = counterRepository.getByName(counterName) + 1;
             counterRepository.save(counterName, count);
-            log.info(counterName + ": " + count);
+            LOGGER.info(counterName + ": " + count);
 
             count = counterRepository.getByName(Counters.DISCOUNT_TOTAL.name()) + 1;
             counterRepository.save(Counters.DISCOUNT_TOTAL.name(), count);
-            log.info(Counters.DISCOUNT_TOTAL+": "+count);
+            LOGGER.info(Counters.DISCOUNT_TOTAL+": "+count);
         }
         return discount;
     }

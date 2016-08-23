@@ -25,8 +25,10 @@ import com.epam.springadvanced.utils.Convert;
 @Repository
 public class UserRepositoryImpl implements UserRepository
 {
-    private static final String UPDATE_USER_BY_ID = "UPDATE user SET name=?, email=?, birthDay=?, password=? WHERE id=?";
-    private static final String UPDATE_USER_BY_NAME = "UPDATE user SET name=?, email=?, birthDay=?, password=? WHERE name=?";
+    private static final String UPDATE_USER_BY_ID = "UPDATE user SET name=?, email=?, birthDay=?, password=? "
+            + "WHERE id=?";
+    private static final String UPDATE_USER_BY_NAME = "UPDATE user SET name=?, email=?, birthDay=?, password=? "
+            + "WHERE name=?";
     private static final String SELECT_BY_USER_ID = "SELECT * FROM user WHERE id=?";
     private static final String SELECT_BY_USER_EMAIL = "SELECT * FROM user WHERE email=?";
     private static final String SELECT_BY_USER_NAME = "SELECT * FROM user WHERE name=?";

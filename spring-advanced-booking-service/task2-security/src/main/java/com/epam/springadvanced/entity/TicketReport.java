@@ -41,5 +41,4 @@ public class TicketReport
     {
         return eventName;
     }
-
 }

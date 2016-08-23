@@ -42,19 +42,19 @@ public class BookingServiceTests
 
     @DirtiesContext
     @Test
-    public void testBookingServiceBookTicker()
+    public void testBookingServiceBookTicket()
             throws UserNotRegisteredException, TicketAlreadyBookedException, TicketWithoutEventException
     {
         User user = userService.getById(1);
-        LocalDateTime date = LocalDateTime.parse("2007-12-03T10:15:30");
-        String name = "name";
+        LocalDateTime date = LocalDateTime.parse("2012-10-27T10:15:30");
+        String name = "eventName";
         float price = 2.5f;
         Rating rating = Rating.HIGH;
         Event event = new Event(name, date, price, rating);
         Auditorium auditorium = auditoriumRepository.getById(1);
         event.setAuditorium(auditorium);
         eventRepository.save(event);
-        Seat seat = new Seat(5);
+        Seat seat = new Seat(18);
         Ticket ticket = new Ticket(event, seat);
         bookingService.bookTicket(user, ticket);
         Collection<Ticket> tickets = bookingService.getTicketsForEvent(event, date);

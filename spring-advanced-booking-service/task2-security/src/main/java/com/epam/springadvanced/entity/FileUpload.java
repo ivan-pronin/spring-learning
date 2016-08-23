@@ -2,7 +2,6 @@ package com.epam.springadvanced.entity;
 
 public class FileUpload
 {
-
     private String name;
 
     public String getName()

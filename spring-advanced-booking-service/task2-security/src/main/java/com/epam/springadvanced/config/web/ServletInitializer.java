@@ -58,5 +58,4 @@ public class ServletInitializer extends AbstractDispatcherServletInitializer
         registration.setMultipartConfig(multipartConfigElement);
         super.customizeRegistration(registration);
     }
-
 }

@@ -16,54 +16,63 @@ import com.epam.springadvanced.repository.UserRepository;
 import com.epam.springadvanced.service.UserService;
 
 @Service
-public class UserServiceImpl implements UserService {
-
-    private static final Logger log = LoggerFactory.getLogger(UserService.class);
+public class UserServiceImpl implements UserService
+{
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserService.class);
 
     @Autowired
     private TicketRepository ticketRepository;
+
     @Autowired
     private UserRepository userRepository;
 
     @Override
-    public User create(String name, String email, LocalDate birthDay) {
+    public User create(String name, String email, LocalDate birthDay)
+    {
         return new User(name, email, birthDay);
     }
 
     @Override
-    public User register(User user) {
-        log.info("User <" + user.getName() + "> is registered");
+    public User register(User user)
+    {
+        LOGGER.info("User <" + user.getName() + "> is registered");
         user = userRepository.save(user);
         return user;
     }
 
     @Override
-    public void remove(User user) {
+    public void remove(User user)
+    {
         Optional.ofNullable(user).ifPresent(u -> userRepository.delete(u.getId()));
     }
 
     @Override
-    public User getById(long id) {
+    public User getById(long id)
+    {
         return userRepository.findById(id);
     }
 
     @Override
-    public User getUserByEmail(String email) {
+    public User getUserByEmail(String email)
+    {
         return userRepository.findByEmail(email);
     }
 
     @Override
-    public User getUserByName(String name) {
+    public User getUserByName(String name)
+    {
         return userRepository.findByName(name);
     }
 
     @Override
-    public Collection<Ticket> getBookedTickets() {
+    public Collection<Ticket> getBookedTickets()
+    {
         return ticketRepository.getBookedTickets();
     }
 
     @Override
-    public Collection<Ticket> getBookedTicketsByUserId(long userId) {
+    public Collection<Ticket> getBookedTicketsByUserId(long userId)
+    {
         return ticketRepository.getBookedTicketsByUserId(userId);
     }
 }

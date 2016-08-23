@@ -1,5 +1,7 @@
 package com.epam.springadvanced.repository.impl;
 
+import static java.util.Optional.ofNullable;
+
 import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -15,11 +17,9 @@ import com.epam.springadvanced.entity.User;
 import com.epam.springadvanced.entity.Win;
 import com.epam.springadvanced.repository.WinsRepository;
 
-import static java.util.Optional.ofNullable;
-
 @Repository
-public class WinsRepositoryImpl implements WinsRepository {
-
+public class WinsRepositoryImpl implements WinsRepository
+{
     private static final String SELECT_ALL = "select w.*, u.* from wins w, user u WHERE u.id=w.user_id";
     private static final String SELECT_BY_USER_ID = "select * from wins w, user u WHERE w.user_id=u.id and u.id=?";
     private static final String DELETE_WINS = "DELETE from wins WHERE user_id = ?";
@@ -28,10 +28,13 @@ public class WinsRepositoryImpl implements WinsRepository {
     private JdbcTemplate jdbcTemplate;
 
     @Override
-    public Win save(Win win) {
-        if (win != null && win.getUser() != null) {
+    public Win save(Win win)
+    {
+        if (win != null && win.getUser() != null)
+        {
             User user = win.getUser();
-            if (user.getId() != null) {
+            if (user.getId() != null)
+            {
                 SimpleJdbcInsert insert = new SimpleJdbcInsert(jdbcTemplate).withTableName("wins");
                 insert.setGeneratedKeyName("id");
                 Map<String, Object> args = new HashMap<>();
@@ -44,32 +47,32 @@ public class WinsRepositoryImpl implements WinsRepository {
     }
 
     @Override
-    public List<Win> getAll() {
+    public List<Win> getAll()
+    {
         return jdbcTemplate.query(SELECT_ALL, winMapper());
     }
 
-
     @Override
-    public List<Win> getByUserId(long userId) {
+    public List<Win> getByUserId(long userId)
+    {
         return jdbcTemplate.query(SELECT_BY_USER_ID, winMapper(), userId);
     }
 
     @Override
-    public void delete(long userId) {
+    public void delete(long userId)
+    {
         jdbcTemplate.update(DELETE_WINS, userId);
     }
 
-    private RowMapper<Win> winMapper() {
-        return (rs, rowNum) -> {
+    private RowMapper<Win> winMapper()
+    {
+        return (rs, rowNum) ->
+        {
             Win win = new Win();
             win.setId(rs.getLong(1));
             win.setDate(rs.getDate(3));
-            win.setUser(
-                    new User(
-                            rs.getLong(4),
-                            rs.getString(5),
-                            rs.getString(6),
-                            ofNullable(rs.getDate(7)).map(Date::toLocalDate).orElseGet(null)));
+            win.setUser(new User(rs.getLong(4), rs.getString(5), rs.getString(6),
+                    ofNullable(rs.getDate(7)).map(Date::toLocalDate).orElseGet(null)));
             return win;
         };
     }

@@ -19,7 +19,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Controller
 public class UserFileUploadController
 {
-
     @Autowired
     private UserRepository userRepository;
 
@@ -40,7 +39,6 @@ public class UserFileUploadController
             }
             return "upload";
         }
-
         return "upload";
     }
 }

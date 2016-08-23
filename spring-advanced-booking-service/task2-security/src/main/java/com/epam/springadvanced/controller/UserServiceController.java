@@ -32,7 +32,6 @@ import com.epam.springadvanced.utils.ControllerUtils;
 @Controller
 public class UserServiceController
 {
-
     @Autowired
     private UserService userService;
 

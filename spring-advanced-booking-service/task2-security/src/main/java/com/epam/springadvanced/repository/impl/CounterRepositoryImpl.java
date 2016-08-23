@@ -8,8 +8,8 @@ import org.springframework.stereotype.Repository;
 import com.epam.springadvanced.repository.CounterRepository;
 
 @Repository
-public class CounterRepositoryImpl implements CounterRepository {
-
+public class CounterRepositoryImpl implements CounterRepository
+{
     private static final String UPDATE_COUNTER = "UPDATE counters SET counter=? WHERE name=?";
     private static final String INSERT_COUNTER = "INSERT INTO counters(name, counter) VALUES (?,?)";
     private static final String SELECT_BY_NAME = "SELECT counter FROM counters WHERE name=?";
@@ -19,25 +19,33 @@ public class CounterRepositoryImpl implements CounterRepository {
     private JdbcTemplate jdbcTemplate;
 
     @Override
-    public void save(String counterName, int count) {
-        if (counterName != null && !counterName.isEmpty()) {
-            if (jdbcTemplate.update(UPDATE_COUNTER, count, counterName) == 0) {
+    public void save(String counterName, int count)
+    {
+        if (counterName != null && !counterName.isEmpty())
+        {
+            if (jdbcTemplate.update(UPDATE_COUNTER, count, counterName) == 0)
+            {
                 jdbcTemplate.update(INSERT_COUNTER, counterName, count);
             }
         }
     }
 
     @Override
-    public int getByName(String counterName) {
-        try {
+    public int getByName(String counterName)
+    {
+        try
+        {
             return jdbcTemplate.queryForObject(SELECT_BY_NAME, Integer.class, counterName);
-        } catch (EmptyResultDataAccessException ignored) {
+        }
+        catch (EmptyResultDataAccessException ignored)
+        {
         }
         return 0;
     }
 
     @Override
-    public void increment(String counterName) {
+    public void increment(String counterName)
+    {
         jdbcTemplate.update(INCREMENT_COUNTER, counterName);
     }
 }

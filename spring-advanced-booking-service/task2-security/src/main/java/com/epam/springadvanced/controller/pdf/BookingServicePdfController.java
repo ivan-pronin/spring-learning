@@ -29,6 +29,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -57,6 +59,7 @@ public class BookingServicePdfController
 {
     private static final String TICKETS_REPORT_TEMPLATE = "jasper/ticketsReportTemplate.jrxml";
     private static final String EVENT_1_DATE = "2016-11-03T21:00:00";
+    private static final Logger LOGGER = LoggerFactory.getLogger(BookingServicePdfController.class);
 
     @Autowired
     private BookingService bookingService;
@@ -77,7 +80,6 @@ public class BookingServicePdfController
             HttpServletResponse response) throws JRException, IOException
     {
         List<TicketReport> tickets = convertToTicketReport(getTickets(booking));
-        System.out.println(">> TICEKTS: " + tickets);
         InputStream template = Thread.currentThread().getContextClassLoader()
                 .getResourceAsStream(TICKETS_REPORT_TEMPLATE);
         JasperReport report = JasperCompileManager.compileReport(template);
@@ -94,8 +96,7 @@ public class BookingServicePdfController
         }
         catch (Exception e)
         {
-            System.out.println("Failed to generate report! ");
-            e.printStackTrace();
+            LOGGER.error("Failed to generate report!", e);
         }
     }
 

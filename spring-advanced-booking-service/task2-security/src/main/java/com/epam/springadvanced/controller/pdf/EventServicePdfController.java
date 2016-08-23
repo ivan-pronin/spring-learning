@@ -27,6 +27,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -50,7 +52,9 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 public class EventServicePdfController
 {
     private static final String EVENTS_REPORT_TEMPLATE = "jasper/eventsReportTemplate.jrxml";
+    private static final Logger LOGGER = LoggerFactory.getLogger(EventServicePdfController.class);
 
+    
     @Autowired
     private EventService eventService;
 
@@ -83,8 +87,7 @@ public class EventServicePdfController
         }
         catch (Exception e)
         {
-            System.out.println("Failed to generate report! ");
-            e.printStackTrace();
+            LOGGER.error("Failed to generate report!", e);
         }
     }
 }

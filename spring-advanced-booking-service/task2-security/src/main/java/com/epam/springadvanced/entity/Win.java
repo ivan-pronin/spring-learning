@@ -2,32 +2,39 @@ package com.epam.springadvanced.entity;
 
 import java.util.Date;
 
-public class Win {
+public class Win
+{
     private Long id;
     private User user;
     private Date date;
 
-    public Long getId() {
+    public Long getId()
+    {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(long id)
+    {
         this.id = id;
     }
 
-    public User getUser() {
+    public User getUser()
+    {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(User user)
+    {
         this.user = user;
     }
 
-    public Date getDate() {
+    public Date getDate()
+    {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(Date date)
+    {
         this.date = date;
     }
 }

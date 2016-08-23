@@ -17,76 +17,86 @@ import com.epam.springadvanced.service.Rating;
 import com.epam.springadvanced.service.exception.AuditoriumAlreadyAssignedException;
 
 @Service
-public class EventServiceImpl implements EventService {
-
+public class EventServiceImpl implements EventService
+{
     private static final Logger log = LoggerFactory.getLogger(EventService.class);
 
     private EventRepository eventRepository;
 
     @Autowired
-    public EventServiceImpl(EventRepository eventRepository) {
+    public EventServiceImpl(EventRepository eventRepository)
+    {
         this.eventRepository = eventRepository;
     }
 
     @Override
-    public Event create(String name, float price, Rating rating) {
+    public Event create(String name, float price, Rating rating)
+    {
         Event event = new Event(name, null, price, rating);
         log.info("Event <" + event.getName() + "> created");
         return eventRepository.save(event);
     }
 
     @Override
-    public Event create(String name, LocalDateTime dateTime, float price, Rating rating) {
+    public Event create(String name, LocalDateTime dateTime, float price, Rating rating)
+    {
         Event event = new Event(name, dateTime, price, rating);
         log.info("Event <" + event.getName() + "> created");
         return eventRepository.save(event);
     }
 
     @Override
-    public void remove(Event event) {
-        if (event != null && event.getId()!=null) {
+    public void remove(Event event)
+    {
+        if (event != null && event.getId() != null)
+        {
             eventRepository.delete(event.getId());
         }
     }
 
     @Override
-    public Event getByName(String name) {
+    public Event getByName(String name)
+    {
         return eventRepository.getByName(name);
     }
 
     @Override
-    public Event getById(long id) {
+    public Event getById(long id)
+    {
         return eventRepository.getById(id);
     }
 
     @Override
-    public Collection<Event> getAll() {
+    public Collection<Event> getAll()
+    {
         return eventRepository.getAll();
     }
 
     @Override
-    public Collection<Event> getForDateRange(LocalDateTime from, LocalDateTime to) {
+    public Collection<Event> getForDateRange(LocalDateTime from, LocalDateTime to)
+    {
         Collection<Event> events = eventRepository.getAll();
-        return events.stream()
-                .filter(e -> e.getDateTime().isAfter(from) && e.getDateTime().isBefore(to))
+        return events.stream().filter(e -> e.getDateTime().isAfter(from) && e.getDateTime().isBefore(to))
                 .collect(Collectors.toList());
     }
 
     @Override
-    public Collection<Event> getNextEvents(LocalDateTime to) {
+    public Collection<Event> getNextEvents(LocalDateTime to)
+    {
         return getForDateRange(LocalDateTime.now(), to);
     }
 
     @Override
-    public Event assignAuditorium(Event event, Auditorium auditorium, LocalDateTime dateTime) throws AuditoriumAlreadyAssignedException {
-        if (event != null && auditorium != null && dateTime != null) {
+    public Event assignAuditorium(Event event, Auditorium auditorium, LocalDateTime dateTime)
+            throws AuditoriumAlreadyAssignedException
+    {
+        if (event != null && auditorium != null && dateTime != null)
+        {
             long count = eventRepository.getAll().stream()
-                    .filter(e -> e.getDateTime() != null && e.getDateTime().isEqual(dateTime))
-                    .map(Event::getAuditorium)
-                    .filter(a -> a!=null)
-                    .filter(a -> a.getId() == auditorium.getId())
-                    .count();
-            if (count != 0) {
+                    .filter(e -> e.getDateTime() != null && e.getDateTime().isEqual(dateTime)).map(Event::getAuditorium)
+                    .filter(a -> a != null).filter(a -> a.getId() == auditorium.getId()).count();
+            if (count != 0)
+            {
                 throw new AuditoriumAlreadyAssignedException(event, auditorium);
             }
             event.setAuditorium(auditorium);
@@ -97,5 +107,4 @@ public class EventServiceImpl implements EventService {
         }
         return event;
     }
-
 }

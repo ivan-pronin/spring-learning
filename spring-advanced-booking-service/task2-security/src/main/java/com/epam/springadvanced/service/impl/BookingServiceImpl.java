@@ -29,16 +29,19 @@ import com.epam.springadvanced.service.exception.UserNotRegisteredException;
 @Service
 public class BookingServiceImpl implements BookingService
 {
-    private static final Logger log = LoggerFactory.getLogger(BookingService.class);
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(BookingService.class);
     private static final int VIP_PRICE_COEF = 2;
     private static final float HIGH_EVENT_PRICE_COEF = 1.2f;
+
     @Autowired
     private UserService userService;
+
     @Autowired
     private TicketRepository ticketRepository;
+
     @Autowired
     private DiscountService discountService;
+
     @Autowired
     private AuditoriumRepository auditoriumRepository;
 
@@ -88,7 +91,7 @@ public class BookingServiceImpl implements BookingService
         if (notBooked)
         {
             ticketRepository.saveBookedTicket(user, ticket);
-            log.info(String.format("User <%s> booked ticket with seat number %d for event <%s>", user.getName(),
+            LOGGER.info(String.format("User <%s> booked ticket with seat number %d for event <%s>", user.getName(),
                     ticket.getSeat().getNumber(), ticket.getEvent().getName()));
         }
         else

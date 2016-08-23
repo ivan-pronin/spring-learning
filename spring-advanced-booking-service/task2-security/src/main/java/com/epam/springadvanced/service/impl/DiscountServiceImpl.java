@@ -12,18 +12,16 @@ import com.epam.springadvanced.service.DiscountService;
 import com.epam.springadvanced.service.DiscountStrategy;
 
 @Service
-public class DiscountServiceImpl implements DiscountService {
-
+public class DiscountServiceImpl implements DiscountService
+{
     @Autowired
     private List<DiscountStrategy> strategies;
 
-
     @Override
-    public float getDiscount(User user, Event event, LocalDateTime dateTime) {
+    public float getDiscount(User user, Event event, LocalDateTime dateTime)
+    {
         final double[] discount = {0};
-        strategies.stream()
-                .mapToDouble(strategy -> strategy.calculate(user))
-                .max().ifPresent(d -> discount[0] = d);
+        strategies.stream().mapToDouble(strategy -> strategy.calculate(user)).max().ifPresent(d -> discount[0] = d);
         return (float) discount[0];
     }
 }
