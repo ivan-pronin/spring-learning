@@ -4,8 +4,13 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-public class Convert
+public final class Convert
 {
+    private Convert()
+    {
+        // nothing to do
+    }
+
     public static Timestamp toTimestamp(LocalDateTime dateTime)
     {
         if (dateTime != null)

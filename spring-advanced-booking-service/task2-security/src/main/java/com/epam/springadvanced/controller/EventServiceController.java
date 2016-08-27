@@ -1,22 +1,3 @@
-/*
- * =============================================================================
- *
- * Copyright (c) 2011-2016, The THYMELEAF team (http://www.thymeleaf.org)
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
- * =============================================================================
- */
 package com.epam.springadvanced.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,33 +13,31 @@ import com.epam.springadvanced.utils.ControllerUtils;
 @Controller
 public class EventServiceController
 {
+    private static final String EVENT_SERVICE = "event-service";
+    private static final String EVENT_SERVICE_PATH = "/event-service";
+
     @Autowired
     private EventService eventService;
 
-    public EventServiceController()
-    {
-        super();
-    }
-
-    @RequestMapping(value = "/event-service")
+    @RequestMapping(value = EVENT_SERVICE_PATH)
     public String openMainModelPage(final Event user, final BindingResult bindingResult, final ModelMap model)
     {
-        return "event-service";
+        return EVENT_SERVICE;
     }
 
-    @RequestMapping(value = "/event-service", params = {"getEventById"})
+    @RequestMapping(value = EVENT_SERVICE_PATH, params = {"getEventById"})
     public String getEventById(final Event event, final BindingResult bindingResult, final ModelMap model)
     {
         Event foundevent = eventService.getById(event.getId());
         ControllerUtils.addResultToModel(model, foundevent);
-        return "event-service";
+        return EVENT_SERVICE;
     }
 
-    @RequestMapping(value = "/event-service", params = {"getEventByName"})
+    @RequestMapping(value = EVENT_SERVICE_PATH, params = {"getEventByName"})
     public String getEventByName(final Event event, final BindingResult bindingResult, final ModelMap model)
     {
         Event foundevent = eventService.getByName(event.getName());
         ControllerUtils.addResultToModel(model, foundevent);
-        return "event-service";
+        return EVENT_SERVICE;
     }
 }

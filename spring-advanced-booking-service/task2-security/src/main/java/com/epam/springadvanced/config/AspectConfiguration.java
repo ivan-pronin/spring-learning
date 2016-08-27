@@ -7,5 +7,6 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 @Configuration
 @EnableAspectJAutoProxy(proxyTargetClass = true)
 @ComponentScan("com.epam.springadvanced.aspect")
-public class AspectConfiguration {
+public class AspectConfiguration
+{
 }

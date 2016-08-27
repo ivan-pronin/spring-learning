@@ -12,7 +12,11 @@ import com.epam.springadvanced.repository.CounterRepository;
 
 @Aspect
 @Component
-public class CounterAspect {
+public class CounterAspect
+{
+    private static final String TIMES = " times";
+
+    private static final String COLON = ": ";
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CounterAspect.class);
 
@@ -20,35 +24,41 @@ public class CounterAspect {
     private CounterRepository counterRepository;
 
     @Pointcut("execution(* com.epam.springadvanced.service.EventService.getByName(..))")
-    public void pointcutEventByName() {
+    public void pointcutEventByName()
+    {
     }
 
     @Pointcut("execution(* com.epam.springadvanced.service.BookingService.getTicketPrice(..))")
-    public void pointcutPriceQueried() {
+    public void pointcutPriceQueried()
+    {
     }
 
     @Pointcut("execution(* com.epam.springadvanced.service.BookingService.bookTicket(..))")
-    public void pointcutTicketBooked() {
+    public void pointcutTicketBooked()
+    {
     }
 
     @AfterReturning("pointcutEventByName()")
-    public void countEventAccessedByName() {
+    public void countEventAccessedByName()
+    {
         Integer count = counterRepository.getByName(Counters.EVENT_ACCESSED_BY_NAME.name()) + 1;
         counterRepository.save(Counters.EVENT_ACCESSED_BY_NAME.name(), count);
-        LOGGER.info(Counters.EVENT_ACCESSED_BY_NAME + ": " + count + " times");
+        LOGGER.info(Counters.EVENT_ACCESSED_BY_NAME + COLON + count + TIMES);
     }
 
     @AfterReturning("pointcutPriceQueried()")
-    public void countEventPriceQueried() {
+    public void countEventPriceQueried()
+    {
         Integer count = counterRepository.getByName(Counters.PRICE_QUERIED.name()) + 1;
         counterRepository.save(Counters.PRICE_QUERIED.name(), count);
-        LOGGER.info(Counters.PRICE_QUERIED + ": " + count + " times");
+        LOGGER.info(Counters.PRICE_QUERIED + COLON + count + TIMES);
     }
 
     @AfterReturning("pointcutTicketBooked()")
-    public void countTicketBooked() {
+    public void countTicketBooked()
+    {
         Integer count = counterRepository.getByName(Counters.TICKET_BOOKED.name()) + 1;
         counterRepository.save(Counters.TICKET_BOOKED.name(), count);
-        LOGGER.info(Counters.TICKET_BOOKED + ": " + count + " times");
+        LOGGER.info(Counters.TICKET_BOOKED + COLON + count + TIMES);
     }
 }

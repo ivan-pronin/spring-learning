@@ -24,19 +24,21 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Controller
 public class EventFileUploadController
 {
+    private static final String UPLOAD = "upload";
+    private static final String UPLOAD_PATH = "/upload";
     private static final Logger LOGGER = LoggerFactory.getLogger(EventFileUploadController.class);
 
     @Autowired
     private EventRepository eventRepository;
 
-    @RequestMapping(value = "/upload")
+    @RequestMapping(value = UPLOAD_PATH)
     public String openMainModelPage(final FileUpload fileUpload, final BindingResult bindingResult,
             final ModelMap model)
     {
-        return "upload";
+        return UPLOAD;
     }
 
-    @RequestMapping(value = "/upload", params = {"uploadEvents"}, method = RequestMethod.POST)
+    @RequestMapping(value = UPLOAD_PATH, params = {"uploadEvents"}, method = RequestMethod.POST)
     public String uploadEvents(@RequestParam("file") MultipartFile file) throws IOException
     {
         if (!file.isEmpty())
@@ -52,8 +54,8 @@ public class EventFileUploadController
                 eventRepository.save(event);
                 LOGGER.info("Saved event: {} with id: {}", event, event.getId());
             }
-            return "upload";
+            return UPLOAD;
         }
-        return "upload";
+        return UPLOAD;
     }
 }

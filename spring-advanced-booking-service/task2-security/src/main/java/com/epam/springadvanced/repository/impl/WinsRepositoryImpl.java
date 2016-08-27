@@ -64,6 +64,7 @@ public class WinsRepositoryImpl implements WinsRepository
         jdbcTemplate.update(DELETE_WINS, userId);
     }
 
+    @SuppressWarnings("checkstyle:MagicNumber")
     private RowMapper<Win> winMapper()
     {
         return (rs, rowNum) ->

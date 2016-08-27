@@ -1,5 +1,7 @@
 package com.epam.springadvanced.repository.impl;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -14,6 +16,8 @@ public class CounterRepositoryImpl implements CounterRepository
     private static final String INSERT_COUNTER = "INSERT INTO counters(name, counter) VALUES (?,?)";
     private static final String SELECT_BY_NAME = "SELECT counter FROM counters WHERE name=?";
     private static final String INCREMENT_COUNTER = "UPDATE counters SET counter = counter+1 WHERE name=?";
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(CounterRepositoryImpl.class);
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -39,6 +43,7 @@ public class CounterRepositoryImpl implements CounterRepository
         }
         catch (EmptyResultDataAccessException ignored)
         {
+            LOGGER.warn("No counter found with name: {}", counterName);
         }
         return 0;
     }

@@ -13,12 +13,7 @@ import org.springframework.web.servlet.support.AbstractDispatcherServletInitiali
 
 public class ServletInitializer extends AbstractDispatcherServletInitializer
 {
-    private int maxUploadSizeInMb = 5 * 1024 * 1024; // 5 MB
-
-    public ServletInitializer()
-    {
-        super();
-    }
+    private static final int MAX_UPLOAD_FILE_MB = 5 * 1024 * 1024; // 5 MB
 
     @Override
     protected WebApplicationContext createServletApplicationContext()
@@ -54,7 +49,7 @@ public class ServletInitializer extends AbstractDispatcherServletInitializer
     {
         File uploadDirectory = new File("uploadDirectory");
         MultipartConfigElement multipartConfigElement = new MultipartConfigElement(uploadDirectory.getAbsolutePath(),
-                maxUploadSizeInMb, maxUploadSizeInMb * 2, maxUploadSizeInMb / 2);
+                MAX_UPLOAD_FILE_MB, MAX_UPLOAD_FILE_MB * 2, MAX_UPLOAD_FILE_MB / 2);
         registration.setMultipartConfig(multipartConfigElement);
         super.customizeRegistration(registration);
     }

@@ -5,6 +5,7 @@ import java.util.Collection;
 
 import com.epam.springadvanced.entity.Auditorium;
 import com.epam.springadvanced.entity.Event;
+import com.epam.springadvanced.entity.Rating;
 import com.epam.springadvanced.service.exception.AuditoriumAlreadyAssignedException;
 
 public interface EventService

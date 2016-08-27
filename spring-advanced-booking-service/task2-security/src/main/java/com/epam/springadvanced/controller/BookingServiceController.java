@@ -1,22 +1,3 @@
-/*
- * =============================================================================
- *
- * Copyright (c) 2011-2016, The THYMELEAF team (http://www.thymeleaf.org)
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
- * =============================================================================
- */
 package com.epam.springadvanced.controller;
 
 import java.time.LocalDateTime;
@@ -47,6 +28,9 @@ import com.epam.springadvanced.service.exception.UserNotRegisteredException;
 @Controller
 public class BookingServiceController
 {
+    private static final String BOOK_RESULT = "bookResult";
+    private static final String BOOKING_SERVICE = "booking-service";
+    private static final String BOOKING_SERVICE_PATH = "/booking-service";
     private static final String EVENT_1_DATE = "2016-11-03T21:00:00";
 
     @Autowired
@@ -58,19 +42,13 @@ public class BookingServiceController
     @Autowired
     private UserService userService;
 
-    public BookingServiceController()
-    {
-        super();
-    }
-    
-    @RequestMapping(value = "/booking-service")
+    @RequestMapping(value = BOOKING_SERVICE_PATH)
     public String openMainModelPage(final Booking booking, final BindingResult bindingResult, final ModelMap model)
     {
-        return "/booking-service";
+        return BOOKING_SERVICE_PATH;
     }
-   
 
-    @RequestMapping(value = "/booking-service", params = {"getTicketPrice"})
+    @RequestMapping(value = BOOKING_SERVICE_PATH, params = {"getTicketPrice"})
     public String getTicketPrice(final Booking booking, final BindingResult bindingResult, final ModelMap model)
             throws UserNotRegisteredException, EventNotAssignedException
     {
@@ -80,10 +58,10 @@ public class BookingServiceController
         User user = userService.getById(booking.getUserId());
         float price = bookingService.getTicketPrice(event, LocalDateTime.parse(EVENT_1_DATE), seats, user);
         model.addAttribute("ticketPrice", price);
-        return "booking-service";
+        return BOOKING_SERVICE;
     }
 
-    @RequestMapping(value = "/booking-service", params = {"bookTicket"})
+    @RequestMapping(value = BOOKING_SERVICE_PATH, params = {"bookTicket"})
     public String bookTicket(final Booking booking, final BindingResult bindingResult, final ModelMap model)
             throws UserNotRegisteredException, TicketAlreadyBookedException, TicketWithoutEventException
     {
@@ -93,22 +71,22 @@ public class BookingServiceController
         try
         {
             bookingService.bookTicket(user, ticket);
-            model.addAttribute("bookResult", "Success!");
+            model.addAttribute(BOOK_RESULT, "Success!");
         }
         catch (UserNotRegisteredException | TicketAlreadyBookedException | TicketWithoutEventException e)
         {
-            model.addAttribute("bookResult", "Failure =( ");
+            model.addAttribute(BOOK_RESULT, "Failure =( ");
         }
-        return "booking-service";
+        return BOOKING_SERVICE;
     }
 
-    @RequestMapping(value = "/booking-service", params = {"getTickets"})
+    @RequestMapping(value = BOOKING_SERVICE_PATH, params = {"getTickets"})
     public String getTickets(final Booking booking, final BindingResult bindingResult, final ModelMap model)
     {
         Event event = eventService.getById(booking.getEventId());
         List<Ticket> tickets = (List<Ticket>) bookingService.getTicketsForEvent(event,
                 LocalDateTime.parse(EVENT_1_DATE));
         model.addAttribute("tickets", tickets);
-        return "booking-service";
+        return BOOKING_SERVICE;
     }
 }

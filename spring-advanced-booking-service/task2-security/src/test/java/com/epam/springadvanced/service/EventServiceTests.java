@@ -12,6 +12,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.epam.springadvanced.config.SpringConfiguration;
 import com.epam.springadvanced.config.web.SecurityConfiguration;
 import com.epam.springadvanced.entity.Event;
+import com.epam.springadvanced.entity.Rating;
 
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = {SpringConfiguration.class, SecurityConfiguration.class})
