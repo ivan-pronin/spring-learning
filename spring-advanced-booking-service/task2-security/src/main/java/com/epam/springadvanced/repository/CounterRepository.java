@@ -1,6 +1,7 @@
 package com.epam.springadvanced.repository;
 
-public interface CounterRepository {
+public interface CounterRepository
+{
     void save(String counterName, int count);
 
     int getByName(String counterName);

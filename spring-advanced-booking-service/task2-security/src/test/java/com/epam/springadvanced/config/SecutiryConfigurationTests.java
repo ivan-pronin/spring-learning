@@ -18,41 +18,18 @@ import com.epam.springadvanced.config.web.SecurityConfiguration;
 public class SecutiryConfigurationTests
 {
 
+    private static final String ADMIN = "admin";
     @Autowired
     private JdbcTemplate db;
 
     @Test
     public void testAuthoritiesByUsernameQuery()
     {
-        String query = "select u.name as username, r.name as role, 123 as pass from user U left join roles RS on u.id = rs.user_id "
-                + "left join role R on r.id = rs.role_id where u.name = ?";
-        UserData data = db.queryForObject(query, new Object[] {"admin"}, userDataMapper());
-        Assert.assertEquals("admin", data.username);
+        String query = "select u.name as username, r.name as role, 123 as pass from user U left join roles RS on u.id "
+                + "= rs.user_id left join role R on r.id = rs.role_id where u.name = ?";
+        UserData data = db.queryForObject(query, new Object[] {ADMIN}, userDataMapper());
+        Assert.assertEquals(ADMIN, data.username);
         Assert.assertEquals("BOOKING_MANAGER", data.role);
-    }
-    /*
-     * String findUserQuery = "SELECT name as username, password, 1 as enabled FROM user WHERE name = ?";
-     * String findAuthority =
-     * "select u.name as username, r.name as role from user U left join roles RS on u.id = rs.user_id "
-     * + "left join role R on r.id = rs.role_id where u.name = ?";
-     * auth.jdbcAuthentication().dataSource(dataSource).usersByUsernameQuery(findUserQuery)
-     * .authoritiesByUsernameQuery(findAuthority);
-     * auth.authenticationProvider(authenticationProvider(auth));
-     *
-     */
-
-    private class UserData
-    {
-        private String username;
-        private String role;
-        private String password;
-
-        public UserData(String username, String role, String password)
-        {
-            this.username = username;
-            this.role = role;
-            this.password = password;
-        }
     }
 
     private RowMapper<UserData> userDataMapper()
@@ -62,5 +39,19 @@ public class SecutiryConfigurationTests
             UserData data = new UserData(rs.getString(1), rs.getString(2), ofNullable(rs.getString(3)).orElseGet(null));
             return data;
         };
+    }
+
+    private final class UserData
+    {
+        private String username;
+        private String role;
+        private String password;
+
+        private UserData(String username, String role, String password)
+        {
+            this.username = username;
+            this.role = role;
+            this.password = password;
+        }
     }
 }

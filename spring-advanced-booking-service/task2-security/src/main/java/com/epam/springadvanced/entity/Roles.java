@@ -1,4 +1,4 @@
-package com.epam.springadvanced.service;
+package com.epam.springadvanced.entity;
 
 public enum Roles
 {

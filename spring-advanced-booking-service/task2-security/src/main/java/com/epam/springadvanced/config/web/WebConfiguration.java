@@ -27,15 +27,9 @@ import org.thymeleaf.templatemode.TemplateMode;
 @MultipartConfig
 public class WebConfiguration extends WebMvcConfigurerAdapter implements ApplicationContextAware
 {
-
     public static final String CHARACTER_ENCODING = "UTF-8";
 
     private ApplicationContext applicationContext;
-
-    public WebConfiguration()
-    {
-        super();
-    }
 
     @Override
     public void setApplicationContext(final ApplicationContext applicationContext) throws BeansException

@@ -1,4 +1,4 @@
-package com.epam.springadvanced.service;
+package com.epam.springadvanced.entity;
 
 public enum Rating
 {
@@ -6,7 +6,7 @@ public enum Rating
 
     private int value;
 
-    private Rating(int value)
+    Rating(int value)
     {
         this.value = value;
     }

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.epam.springadvanced.entity.Auditorium;
 import com.epam.springadvanced.entity.Event;
+import com.epam.springadvanced.entity.Rating;
 import com.epam.springadvanced.entity.Seat;
 import com.epam.springadvanced.entity.Ticket;
 import com.epam.springadvanced.entity.User;
@@ -19,7 +20,6 @@ import com.epam.springadvanced.repository.AuditoriumRepository;
 import com.epam.springadvanced.repository.TicketRepository;
 import com.epam.springadvanced.service.BookingService;
 import com.epam.springadvanced.service.DiscountService;
-import com.epam.springadvanced.service.Rating;
 import com.epam.springadvanced.service.UserService;
 import com.epam.springadvanced.service.exception.EventNotAssignedException;
 import com.epam.springadvanced.service.exception.TicketAlreadyBookedException;
@@ -29,6 +29,7 @@ import com.epam.springadvanced.service.exception.UserNotRegisteredException;
 @Service
 public class BookingServiceImpl implements BookingService
 {
+    private static final int PERCENT_100 = 100;
     private static final Logger LOGGER = LoggerFactory.getLogger(BookingService.class);
     private static final int VIP_PRICE_COEF = 2;
     private static final float HIGH_EVENT_PRICE_COEF = 1.2f;
@@ -63,11 +64,11 @@ public class BookingServiceImpl implements BookingService
             Seat seat = auditoriumRepository.getSeatByAuditoriumIdAndNumber(auditorium.getId(), number);
             if (auditoriumSeats.contains(seat))
             {
-                price = (seat.isVip() ? event.getTicketPrice() * VIP_PRICE_COEF : event.getTicketPrice());
+                price = seat.isVip() ? event.getTicketPrice() * VIP_PRICE_COEF : event.getTicketPrice();
             }
             price = price * (event.getRating() == Rating.HIGH ? HIGH_EVENT_PRICE_COEF : 1);
             float discount = discountService.getDiscount(user, event, dateTime);
-            price = price - (100 * discount);
+            price = price - (PERCENT_100 * discount);
         }
 
         return price;
@@ -87,7 +88,7 @@ public class BookingServiceImpl implements BookingService
 
         // false if ticket already booked for specified event and seat
         boolean notBooked = ticketRepository.getBookedTickets().stream().noneMatch(
-                t -> t.getEvent().equals(ticket.getEvent()) && t.getSeat().getNumber() == ticket.getSeat().getNumber());
+            t -> t.getEvent().equals(ticket.getEvent()) && t.getSeat().getNumber() == ticket.getSeat().getNumber());
         if (notBooked)
         {
             ticketRepository.saveBookedTicket(user, ticket);

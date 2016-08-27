@@ -19,6 +19,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Controller
 public class UserFileUploadController
 {
+    private static final String UPLOAD = "upload";
     @Autowired
     private UserRepository userRepository;
 
@@ -37,8 +38,8 @@ public class UserFileUploadController
             {
                 userRepository.save(user);
             }
-            return "upload";
+            return UPLOAD;
         }
-        return "upload";
+        return UPLOAD;
     }
 }

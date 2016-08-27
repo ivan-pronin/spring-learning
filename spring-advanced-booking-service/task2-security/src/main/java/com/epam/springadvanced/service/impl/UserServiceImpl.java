@@ -36,8 +36,7 @@ public class UserServiceImpl implements UserService
     public User register(User user)
     {
         LOGGER.info("User <" + user.getName() + "> is registered");
-        user = userRepository.save(user);
-        return user;
+        return userRepository.save(user);
     }
 
     @Override

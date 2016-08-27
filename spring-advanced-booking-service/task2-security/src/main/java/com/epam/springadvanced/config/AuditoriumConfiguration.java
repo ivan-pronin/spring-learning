@@ -25,6 +25,7 @@ public class AuditoriumConfiguration
         return new Auditorium(2, name, numberOfSeats, vipSeats);
     }
 
+    @SuppressWarnings("checkstyle:magicnumber")
     @Bean
     public Auditorium auditorium3(@Value("${auditorium3.name}") String name,
             @Value("${auditorium3.number_of_seats}") Integer numberOfSeats,

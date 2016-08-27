@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -25,10 +27,10 @@ import com.epam.springadvanced.utils.Convert;
 @Repository
 public class UserRepositoryImpl implements UserRepository
 {
-    private static final String UPDATE_USER_BY_ID = "UPDATE user SET name=?, email=?, birthDay=?, password=? "
-            + "WHERE id=?";
-    private static final String UPDATE_USER_BY_NAME = "UPDATE user SET name=?, email=?, birthDay=?, password=? "
-            + "WHERE name=?";
+    private static final String UPDATE_USER_SET_NAME_EMAIL_BIRTH_DAY_PASSWORD = "UPDATE user SET name=?, email=?, "
+            + "birthDay=?, password=? ";
+    private static final String UPDATE_USER_BY_ID = UPDATE_USER_SET_NAME_EMAIL_BIRTH_DAY_PASSWORD + "WHERE id=?";
+    private static final String UPDATE_USER_BY_NAME = UPDATE_USER_SET_NAME_EMAIL_BIRTH_DAY_PASSWORD + "WHERE name=?";
     private static final String SELECT_BY_USER_ID = "SELECT * FROM user WHERE id=?";
     private static final String SELECT_BY_USER_EMAIL = "SELECT * FROM user WHERE email=?";
     private static final String SELECT_BY_USER_NAME = "SELECT * FROM user WHERE name=?";
@@ -39,6 +41,8 @@ public class UserRepositoryImpl implements UserRepository
     private static final String SELECT_USER_ROLES = "select * from role r\n" + "join roles rs on rs.role_id = r.id\n"
             + "where user_id=?";
     private static final String SELECT_ROLE_BY_NAME = "select * from role where name = ?";
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserRepositoryImpl.class);
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -54,43 +58,36 @@ public class UserRepositoryImpl implements UserRepository
     {
         if (user != null)
         {
-            User updatedUser = null;
+            User updatedUser = user;
             String encodedPassword = passwordEncoder.encode(user.getPassword());
-            if (user.getId() != null)
+            if (updatedUser.getId() != null)
             {
                 // try update users by id
                 jdbcTemplate.update(UPDATE_USER_BY_ID, user.getName(), user.getEmail(),
                         Convert.toTimestamp(user.getBirthday()), encodedPassword, user.getId());
-                updatedUser = findById(user.getId());
             }
-            else if (user.getName() != null && !user.getName().isEmpty())
+            else if (updatedUser.getName() != null && !updatedUser.getName().isEmpty())
             {
                 // try update users by name
                 jdbcTemplate.update(UPDATE_USER_BY_NAME, user.getName(), user.getEmail(),
                         Convert.toTimestamp(user.getBirthday()), encodedPassword, user.getName());
-                updatedUser = findByName(user.getName());
             }
-
-            if (updatedUser == null)
+            if (updatedUser.getId() == null)
             {
                 // insert if users not saved yet
                 SimpleJdbcInsert insert = new SimpleJdbcInsert(jdbcTemplate).withTableName("user");
                 insert.setGeneratedKeyName("id");
                 Map<String, Object> args = new HashMap<>();
-                args.put("name", user.getName());
-                args.put("email", user.getEmail());
+                args.put("name", updatedUser.getName());
+                args.put("email", updatedUser.getEmail());
                 args.put("birthDay", Convert.toTimestamp(user.getBirthday()));
                 args.put("password", encodedPassword);
-                user.setId(insert.executeAndReturnKey(args).longValue());
+                updatedUser.setId(insert.executeAndReturnKey(args).longValue());
             }
-            else
-            {
-                user = updatedUser;
-            }
-            updateRoles(user.getId(), user.getRoles());
+            updateRoles(updatedUser.getId(), user.getRoles());
+            return updatedUser;
         }
-
-        return user;
+        return null;
     }
 
     private void updateRoles(long userId, List<Role> roles)
@@ -114,6 +111,7 @@ public class UserRepositoryImpl implements UserRepository
         }
         catch (EmptyResultDataAccessException ignored)
         {
+            LOGGER.warn("No role was found by name: {}", name);
         }
         return null;
     }
@@ -136,6 +134,7 @@ public class UserRepositoryImpl implements UserRepository
         }
         catch (EmptyResultDataAccessException ignored)
         {
+            LOGGER.warn("No user was found by id: {}", id);
         }
         return null;
     }
@@ -149,6 +148,7 @@ public class UserRepositoryImpl implements UserRepository
         }
         catch (EmptyResultDataAccessException ignored)
         {
+            LOGGER.warn("No user was found by email: {}", email);
         }
         return null;
     }
@@ -162,6 +162,7 @@ public class UserRepositoryImpl implements UserRepository
         }
         catch (EmptyResultDataAccessException ignored)
         {
+            LOGGER.warn("No user was found by name: {}", name);
         }
         return null;
     }
@@ -188,6 +189,7 @@ public class UserRepositoryImpl implements UserRepository
         };
     }
 
+    @SuppressWarnings("checkstyle:MagicNumber")
     private RowMapper<User> userMapper()
     {
         return (rs, rowNum) ->

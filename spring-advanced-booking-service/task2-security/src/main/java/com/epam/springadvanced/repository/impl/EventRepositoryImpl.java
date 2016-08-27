@@ -8,16 +8,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
 import com.epam.springadvanced.entity.Event;
+import com.epam.springadvanced.entity.Rating;
 import com.epam.springadvanced.repository.AuditoriumRepository;
 import com.epam.springadvanced.repository.EventRepository;
-import com.epam.springadvanced.service.Rating;
 import com.epam.springadvanced.utils.Convert;
 
 @Repository
@@ -35,6 +34,7 @@ public class EventRepositoryImpl implements EventRepository
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
+
     @Autowired
     private AuditoriumRepository auditoriumRepository;
 
@@ -78,13 +78,7 @@ public class EventRepositoryImpl implements EventRepository
     {
         if (name != null)
         {
-            try
-            {
-                return jdbcTemplate.queryForObject(SELECT_BY_NAME, eventMapper(), name);
-            }
-            catch (EmptyResultDataAccessException ignored)
-            {
-            }
+            return jdbcTemplate.queryForObject(SELECT_BY_NAME, eventMapper(), name);
         }
         return null;
     }
@@ -94,13 +88,7 @@ public class EventRepositoryImpl implements EventRepository
     {
         if (id != null)
         {
-            try
-            {
-                return jdbcTemplate.queryForObject(SELECT_BY_ID, eventMapper(), id);
-            }
-            catch (EmptyResultDataAccessException ignored)
-            {
-            }
+            return jdbcTemplate.queryForObject(SELECT_BY_ID, eventMapper(), id);
         }
         return null;
     }
@@ -111,6 +99,7 @@ public class EventRepositoryImpl implements EventRepository
         return jdbcTemplate.query(SELECT_ALL, eventMapper());
     }
 
+    @SuppressWarnings("checkstyle:MagicNumber")
     private RowMapper<Event> eventMapper()
     {
         return (rs, rowNum) ->

@@ -9,6 +9,7 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
 import com.epam.springadvanced.config.web.SecurityConfiguration;
 
+@SuppressWarnings("checkstyle:HideUtilityClassConstructor")
 @Configuration
 @Import({AspectConfiguration.class, DataConfiguration.class, AuditoriumConfiguration.class,
         SecurityConfiguration.class})

@@ -11,26 +11,30 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
 import com.epam.springadvanced.entity.Event;
+import com.epam.springadvanced.entity.Rating;
 import com.epam.springadvanced.entity.Ticket;
 import com.epam.springadvanced.entity.User;
 import com.epam.springadvanced.repository.AuditoriumRepository;
 import com.epam.springadvanced.repository.EventRepository;
 import com.epam.springadvanced.repository.TicketRepository;
-import com.epam.springadvanced.service.Rating;
 
 @Repository
 public class TicketRepositoryImpl implements TicketRepository
 {
-    private static final String SELECT_ALL = "SELECT t.*, e.* FROM ticket t\n"
-            + "LEFT JOIN event e ON t.event_id = e.id";
-    private static final String SELECT_BY_EVENT_NAME = "SELECT t.*, e.* FROM ticket t\n"
+    private static final String LEFT_JOIN_USER_U_ON_TS_USER_ID_U_ID = "LEFT JOIN user u ON ts.user_id = u.id\n";
+    private static final String INNER_JOIN_TICKETS_TS_ON_TS_TICKET_ID_T_ID = "INNER JOIN tickets ts ON ts.ticket_id "
+            + "= t.id\n";
+    private static final String LEFT_JOIN_EVENT_E_ON_T_EVENT_ID_E_ID = "LEFT JOIN event e ON t.event_id = e.id";
+    private static final String SELECT_T_E_FROM_TICKET_T = "SELECT t.*, e.* FROM ticket t\n";
+    private static final String SELECT_ALL = SELECT_T_E_FROM_TICKET_T + LEFT_JOIN_EVENT_E_ON_T_EVENT_ID_E_ID;
+    private static final String SELECT_BY_EVENT_NAME = SELECT_T_E_FROM_TICKET_T
             + "INNER JOIN event e ON t.event_id = e.id\n" + "WHERE e.name = ?";
     private static final String UPDATE_TICKET = "UPDATE ticket SET price = ?, seat = ?, event_id = ?";
-    private static final String SELECT_BOOKED_TICKETS = "SELECT t.*, e.* FROM ticket t\n"
-            + "INNER JOIN tickets ts ON ts.ticket_id = t.id\n" + "LEFT JOIN user u ON ts.user_id = u.id\n"
-            + "LEFT JOIN event e ON t.event_id = e.id";
-    private static final String SELECT_BOOKED_TICKETS_BY_USER_ID = "SELECT t.*, e.* FROM ticket t\n"
-            + "INNER JOIN tickets ts ON ts.ticket_id = t.id\n" + "LEFT JOIN user u ON ts.user_id = u.id\n"
+    private static final String SELECT_BOOKED_TICKETS = SELECT_T_E_FROM_TICKET_T
+            + INNER_JOIN_TICKETS_TS_ON_TS_TICKET_ID_T_ID + LEFT_JOIN_USER_U_ON_TS_USER_ID_U_ID
+            + LEFT_JOIN_EVENT_E_ON_T_EVENT_ID_E_ID;
+    private static final String SELECT_BOOKED_TICKETS_BY_USER_ID = SELECT_T_E_FROM_TICKET_T
+            + INNER_JOIN_TICKETS_TS_ON_TS_TICKET_ID_T_ID + LEFT_JOIN_USER_U_ON_TS_USER_ID_U_ID
             + "LEFT JOIN event e ON t.event_id = e.id\n" + "WHERE u.id = ?";
     private static final String INSERT_INTO_TICKETS = "INSERT INTO tickets(user_id, ticket_id) VALUES (?,?)";
     private static final String DELETE_BOOKED_TICKETS = "DELETE FROM TICKETS WHERE USER_ID = ?";
@@ -103,13 +107,14 @@ public class TicketRepositoryImpl implements TicketRepository
     @Override
     public void saveBookedTicket(User user, Ticket ticket)
     {
+        Ticket newTicket = null;
         if (user != null && user.getId() != null && ticket != null)
         {
             if (ticket.getId() == null)
             {
-                ticket = save(ticket);
+                newTicket = save(ticket);
             }
-            jdbcTemplate.update(INSERT_INTO_TICKETS, user.getId(), ticket.getId());
+            jdbcTemplate.update(INSERT_INTO_TICKETS, user.getId(), newTicket.getId());
         }
     }
 
@@ -119,6 +124,7 @@ public class TicketRepositoryImpl implements TicketRepository
         jdbcTemplate.update(DELETE_BOOKED_TICKETS, userId);
     }
 
+    @SuppressWarnings("checkstyle:MagicNumber")
     private RowMapper<Ticket> ticketMapper()
     {
         return (rs, rowNum) ->

@@ -20,6 +20,8 @@ import org.springframework.security.web.authentication.rememberme.PersistentToke
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 {
+    private static final int TOKEN_VALIDITY_SECONDS = 86400;
+    private static final String LOGIN_PATH = "/login";
 
     @Autowired
     private DataSource dataSource;
@@ -28,8 +30,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception
     {
         String findUserQuery = "SELECT name as username, password, 1 as enabled FROM user WHERE name = ?";
-        String findAuthority = "select u.name as username, r.name as role from user U left join roles RS on u.id = rs.user_id "
-                + "left join role R on r.id = rs.role_id where u.name = ?";
+        String findAuthority = "select u.name as username, r.name as role from user U left join roles RS on u.id "
+                + "= rs.user_id " + "left join role R on r.id = rs.role_id where u.name = ?";
         auth.jdbcAuthentication().dataSource(dataSource).usersByUsernameQuery(findUserQuery)
                 .authoritiesByUsernameQuery(findAuthority);
         auth.authenticationProvider(authenticationProvider(auth));
@@ -44,10 +46,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
     @Override
     protected void configure(HttpSecurity http) throws Exception
     {
-        http.authorizeRequests().antMatchers("/login").permitAll().antMatchers("/booking-service**")
-                .hasAuthority("BOOKING_MANAGER").anyRequest().authenticated().and().formLogin().loginPage("/login")
+        http.authorizeRequests().antMatchers(LOGIN_PATH).permitAll().antMatchers("/booking-service**")
+                .hasAuthority("BOOKING_MANAGER").anyRequest().authenticated().and().formLogin().loginPage(LOGIN_PATH)
                 .and().rememberMe().rememberMeParameter("remember-me").tokenRepository(persistentTokenRepository())
-                .tokenValiditySeconds(86400);
+                .tokenValiditySeconds(TOKEN_VALIDITY_SECONDS);
     }
 
     @Bean

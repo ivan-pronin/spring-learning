@@ -1,22 +1,3 @@
-/*
- * =============================================================================
- *
- * Copyright (c) 2011-2016, The THYMELEAF team (http://www.thymeleaf.org)
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
- * =============================================================================
- */
 package com.epam.springadvanced.controller.pdf;
 
 import java.io.IOException;
@@ -29,8 +10,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -59,18 +38,12 @@ public class BookingServicePdfController
 {
     private static final String TICKETS_REPORT_TEMPLATE = "jasper/ticketsReportTemplate.jrxml";
     private static final String EVENT_1_DATE = "2016-11-03T21:00:00";
-    private static final Logger LOGGER = LoggerFactory.getLogger(BookingServicePdfController.class);
 
     @Autowired
     private BookingService bookingService;
 
     @Autowired
     private EventService eventService;
-
-    public BookingServicePdfController()
-    {
-        super();
-    }
 
     @RequestMapping(value = "/booking-service",
             params = {"getEventTicketsPdfView"},
@@ -85,19 +58,12 @@ public class BookingServicePdfController
         JasperReport report = JasperCompileManager.compileReport(template);
         JRBeanCollectionDataSource beanColDataSource = new JRBeanCollectionDataSource(tickets);
         Map<String, Object> parameters = new HashMap<>();
-        try
-        {
-            JasperPrint print = JasperFillManager.fillReport(report, parameters, beanColDataSource);
-            response.setContentType("application/octet-stream");
-            String headerKey = "Content-Disposition";
-            String headerValue = String.format("attachment; filename=\"%s\"", "ticketsReportTemplate" + ".pdf");
-            response.setHeader(headerKey, headerValue);
-            JasperExportManager.exportReportToPdfStream(print, response.getOutputStream());
-        }
-        catch (Exception e)
-        {
-            LOGGER.error("Failed to generate report!", e);
-        }
+        JasperPrint print = JasperFillManager.fillReport(report, parameters, beanColDataSource);
+        response.setContentType("application/octet-stream");
+        String headerKey = "Content-Disposition";
+        String headerValue = String.format("attachment; filename=\"%s\"", "ticketsReportTemplate" + ".pdf");
+        response.setHeader(headerKey, headerValue);
+        JasperExportManager.exportReportToPdfStream(print, response.getOutputStream());
     }
 
     private List<Ticket> getTickets(final Booking booking)

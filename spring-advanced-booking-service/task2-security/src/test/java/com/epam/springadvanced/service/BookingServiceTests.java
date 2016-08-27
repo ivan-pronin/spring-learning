@@ -12,9 +12,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.epam.springadvanced.config.SpringConfiguration;
-import com.epam.springadvanced.config.web.SecurityConfiguration;
 import com.epam.springadvanced.entity.Auditorium;
 import com.epam.springadvanced.entity.Event;
+import com.epam.springadvanced.entity.Rating;
 import com.epam.springadvanced.entity.Seat;
 import com.epam.springadvanced.entity.Ticket;
 import com.epam.springadvanced.entity.User;
@@ -25,7 +25,7 @@ import com.epam.springadvanced.service.exception.TicketWithoutEventException;
 import com.epam.springadvanced.service.exception.UserNotRegisteredException;
 
 @RunWith(SpringRunner.class)
-@ContextConfiguration(classes = {SpringConfiguration.class, SecurityConfiguration.class})
+@ContextConfiguration(classes = {SpringConfiguration.class})
 public class BookingServiceTests
 {
     @Autowired

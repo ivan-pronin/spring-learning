@@ -11,15 +11,17 @@ import org.springframework.stereotype.Service;
 
 import com.epam.springadvanced.entity.Auditorium;
 import com.epam.springadvanced.entity.Event;
+import com.epam.springadvanced.entity.Rating;
 import com.epam.springadvanced.repository.EventRepository;
 import com.epam.springadvanced.service.EventService;
-import com.epam.springadvanced.service.Rating;
 import com.epam.springadvanced.service.exception.AuditoriumAlreadyAssignedException;
 
 @Service
 public class EventServiceImpl implements EventService
 {
-    private static final Logger log = LoggerFactory.getLogger(EventService.class);
+    private static final String EVENT_CREATED = "Event <{}> created";
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(EventService.class);
 
     private EventRepository eventRepository;
 
@@ -33,7 +35,7 @@ public class EventServiceImpl implements EventService
     public Event create(String name, float price, Rating rating)
     {
         Event event = new Event(name, null, price, rating);
-        log.info("Event <" + event.getName() + "> created");
+        LOGGER.info(EVENT_CREATED, name);
         return eventRepository.save(event);
     }
 
@@ -41,7 +43,7 @@ public class EventServiceImpl implements EventService
     public Event create(String name, LocalDateTime dateTime, float price, Rating rating)
     {
         Event event = new Event(name, dateTime, price, rating);
-        log.info("Event <" + event.getName() + "> created");
+        LOGGER.info(EVENT_CREATED, name);
         return eventRepository.save(event);
     }
 
@@ -103,7 +105,7 @@ public class EventServiceImpl implements EventService
             event.setDateTime(dateTime);
             eventRepository.save(event);
 
-            log.info("Event <" + event.getName() + "> assigned to auditorium <" + auditorium.getName() + ">");
+            LOGGER.info("Event <" + event.getName() + "> assigned to auditorium <" + auditorium.getName() + ">");
         }
         return event;
     }

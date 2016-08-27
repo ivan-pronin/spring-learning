@@ -18,6 +18,11 @@ import com.epam.springadvanced.entity.User;
 @ContextConfiguration(classes = {SpringConfiguration.class, SecurityConfiguration.class})
 public class UserRepositoryTests
 {
+    private static final String PASSWORD = "password";
+    private static final String EMAIL = "email";
+    private static final String NAME = "name";
+    private static final LocalDate BIRTHDATE = LocalDate.parse("2007-12-03");
+
     @Autowired
     private UserRepository userRepository;
 
@@ -25,14 +30,10 @@ public class UserRepositoryTests
     @Test
     public void testUserRepositorySave()
     {
-        LocalDate birthDate = LocalDate.parse("2007-12-03");
-        String name = "name";
-        String email = "email";
-        String password = "password";
-        User expected = new User(name, email, birthDate);
-        expected.setPassword(password);
+        User expected = new User(NAME, EMAIL, BIRTHDATE);
+        expected.setPassword(PASSWORD);
         User actual = userRepository.save(expected);
-        actual.setPassword(password);
+        actual.setPassword(PASSWORD);
         Assert.assertEquals(expected, actual);
     }
 
@@ -40,11 +41,8 @@ public class UserRepositoryTests
     @Test
     public void testUserRepositoryDelete()
     {
-        LocalDate birthDate = LocalDate.parse("2007-12-03");
-        String name = "name";
-        String email = "email";
-        User expected = new User(1, name, email, birthDate);
-        expected.setPassword("pass");
+        User expected = new User(1, NAME, EMAIL, BIRTHDATE);
+        expected.setPassword(PASSWORD);
         userRepository.save(expected);
         int size = userRepository.getAll().size();
         userRepository.delete(1);

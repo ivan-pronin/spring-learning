@@ -18,13 +18,13 @@ import com.epam.springadvanced.repository.AuditoriumRepository;
 @Repository
 public class AuditoriumRepositoryImpl implements AuditoriumRepository
 {
+    private Map<Integer, Auditorium> auditoriums;
+
     @Autowired
     public AuditoriumRepositoryImpl(List<Auditorium> auditoriumList)
     {
         auditoriums = auditoriumList.stream().collect(toMap(Auditorium::getId, identity()));
     }
-
-    private Map<Integer, Auditorium> auditoriums;
 
     @Override
     public Auditorium getById(int id)

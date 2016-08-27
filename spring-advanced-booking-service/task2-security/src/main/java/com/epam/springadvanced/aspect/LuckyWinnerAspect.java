@@ -19,8 +19,8 @@ import com.epam.springadvanced.repository.WinsRepository;
 
 @Aspect
 @Component
-public class LuckyWinnerAspect {
-
+public class LuckyWinnerAspect
+{
     private static final float PRICE = 0F;
     private static final int LUCKY = 5;
     private static final Logger LOGGER = LoggerFactory.getLogger(LuckyWinnerAspect.class);
@@ -30,14 +30,18 @@ public class LuckyWinnerAspect {
     private WinsRepository winsRepository;
 
     @Pointcut("execution(* com.epam.springadvanced.service.BookingService.bookTicket(..))")
-    public void pointcutLuckyWinner() {
+    public void pointcutLuckyWinner()
+    {
     }
 
+    @SuppressWarnings("checkstyle:IllegalThrows")
     @Around("pointcutLuckyWinner()")
-    public Object luckyWinner(ProceedingJoinPoint jp) throws Throwable {
+    public Object luckyWinner(ProceedingJoinPoint jp) throws Throwable
+    {
         User user = (User) jp.getArgs()[0];
         Ticket ticket = (Ticket) jp.getArgs()[1];
-        if (checkLucky() && ticket != null) {
+        if (checkLucky() && ticket != null)
+        {
             Win win = new Win();
             win.setDate(new Date());
             win.setUser(user);
@@ -49,7 +53,8 @@ public class LuckyWinnerAspect {
         return jp.proceed();
     }
 
-    private boolean checkLucky() {
+    private boolean checkLucky()
+    {
         int rnd = random.nextInt() % LUCKY;
         return rnd == 0;
     }
