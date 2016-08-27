@@ -1,0 +1,30 @@
+1. Add new entity to the application - UserAccount, it should store the amount of prepaid money user 
+has in the system, which should be used during booking procedure. Add methods for refilling the account
+ to the BookingFacade class. Add DAO and service objects for new entity. Add ticketPrice field to Event
+  entity.
+
+2. Update ticket booking methods to check and withdraw money from user account according to the 
+ticketPrice for particular event. 
+
+3. Configure appropriate PlatformTransactionManager implementation in Spring application context. 
+
+4. Make ticket booking methods transactional using Spring declarative transactions management 
+(either xml or annotation based config). 
+
+=================================================================
+[25.08.2016 10:13:36] Igor Seliverstov: Фасад в топку
+[25.08.2016 10:13:54] Igor Seliverstov: Так же как хэндлер энджин и иже с ними
+[25.08.2016 10:14:38] Igor Seliverstov: Все в спринге есть сервисы, если это конечно не спец объекты вроде 
+фабрик и провайдеров
+[25.08.2016 10:15:05] Igor Seliverstov: DAO тоже в топку - это репозитории
+[25.08.2016 10:15:39] Igor Seliverstov: Контроллер он и в Африке контроллер, это идёт из понятийного аппарата mvc
+[25.08.2016 10:16:08] Igor Seliverstov: От сюда вывод, есть сервисы, контроллеры и репозитории
+[25.08.2016 10:16:33] Igor Seliverstov: Это современные рекомендации на тему именования компонентов приложения
+[25.08.2016 10:17:39] Igor Seliverstov: А фасад в задании это просто сервис агрегирующий другие сервисы
+[25.08.2016 10:18:05] Igor Seliverstov: Но в рамках спринга он от этого не перестает быть сервисом
+[25.08.2016 10:19:28] Igor Seliverstov: Вопрос, а зачем вам аспекты?
+[25.08.2016 10:20:56] Igor Seliverstov: Транзакции как раз НЕ работают через аспекты, если конечно у вас нет 
+очень веских причин это делать
+[25.08.2016 10:23:17] Igor Seliverstov: А даже если и есть, то это все равно не аспекты а спринговая подделка
+ под аспекты, а тру аспекты приносят много проблем :)  но в рамках третьего задания это не играет большой роли
+  так как вся сложность реализации скрывается за готовыми объектами которые нужно просто настроить

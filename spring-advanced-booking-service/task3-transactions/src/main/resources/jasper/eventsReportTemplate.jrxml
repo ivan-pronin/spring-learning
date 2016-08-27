@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<!DOCTYPE jasperTemplate
+  PUBLIC "-//JasperReports//DTD Template//EN"
+  "http://jasperreports.sourceforge.net/dtds/jaspertemplate.dtd">
+
+<jasperReport name = "eventReportTemplate">
+
+	<field name = "id" class = "java.lang.Long">
+		<fieldDescription>
+			<![CDATA[id]]>
+		</fieldDescription>
+	</field>
+
+	<field name = "name" class = "java.lang.String">
+		<fieldDescription>
+			<![CDATA[name]]>
+		</fieldDescription>
+	</field>
+
+	<field name = "dateTime" class = "java.time.LocalDateTime">
+		<fieldDescription>
+			<![CDATA[dateTime]]>
+		</fieldDescription>
+	</field>
+	<title>
+		<band height = "30">
+			<textField>
+				<reportElement x = "0" y = "15" width = "50" height = "15"/>
+				<textFieldExpression class = "java.lang.String">
+					<![CDATA["Events: "]]>
+				</textFieldExpression>
+			</textField>
+		</band>
+	</title>	
+	<columnHeader>
+		<band height = "30">
+
+			<textField>
+				<reportElement x = "0" y = "15" width = "50" height = "15"/>
+				<textFieldExpression class = "java.lang.String">
+					<![CDATA["ID"]]>
+				</textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x = "55" y = "15" width = "100" height = "15"/>
+				<textFieldExpression class = "java.lang.String">
+					<![CDATA["Name"]]>
+				</textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x = "150" y = "15" width = "100" height = "15"/>
+				<textFieldExpression class = "java.lang.String">
+					<![CDATA["DateTime"]]>
+				</textFieldExpression>
+			</textField>
+
+		</band>
+	</columnHeader>
+
+	<detail>
+		<band height = "30">
+
+			<textField>
+				<reportElement x = "0" y = "0" width = "50" height = "15"/>
+				<textFieldExpression class = "java.lang.String">
+					<![CDATA[$F{id}]]>
+				</textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x = "55" y = "0" width = "100" height = "15"/>
+				<textFieldExpression class = "java.lang.String">
+					<![CDATA[$F{name}]]>
+				</textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x = "150" y = "0" width = "100" height = "15"/>
+				<textFieldExpression class = "java.lang.String">
+					<![CDATA[$F{dateTime}]]>
+				</textFieldExpression>
+			</textField>
+
+		</band>
+	</detail>
+
+</jasperReport>
