@@ -22,7 +22,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 {
     private static final int TOKEN_VALIDITY_SECONDS = 86400;
     private static final String LOGIN_PATH = "/login";
-
     @Autowired
     private DataSource dataSource;
 
