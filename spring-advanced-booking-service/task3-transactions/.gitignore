@@ -1,0 +1,13 @@
+#Ignore Gradle cache
+.gradle
+
+#Ignore IDE project files
+.settings
+.project
+.classpath
+
+#Ignore other files
+/output/
+/bin/
+/spring_db/
+*.log

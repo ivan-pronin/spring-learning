@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<title>Spring Advanced Ivan Pronin - Event Service</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<link rel="stylesheet" type="text/css" media="all" href="../../css/stsm.css" th:href="@{/css/stsm.css}" />
+		<link rel="stylesheet" type="text/css" media="all" href="../../css/app.css" th:href="@{/css/app.css}" />
+	</head>
+	<body>
+		<div>
+			<img src="../../images/stsmlogo.png" alt="STSM logo" title="STSM logo"
+			th:src="@{/images/stsmlogo.png}" th:alt-title="#{title.application}" />
+		</div>
+		
+		<div class="menu">
+			<a href="/" th:href="@{/}">Home</a>
+			<a href="/booking-service.html" th:href="@{/booking-service}">Booking Service</a>
+			<a href="/user-service.html" th:href="@{/user-service}">User Service</a>
+			<a href="/event-service.html" th:href="@{/event-service}">Event service</a>
+			<a href="/upload.html" th:href="@{/upload}">Upload</a>
+		</div>
+		
+		<div th:if="${#httpServletRequest.remoteUser != null}">
+    		<h2 th:text="'You are logged in as ' + ${#httpServletRequest.remoteUser} + '!'">
+    		      sample_user
+    		</h2>
+			<form th:action="@{/logout}" method="post">
+   				<input type="submit" value="Log out" />
+			</form>	    		
+		</div>
+		
+			<h2>Event Facade</h2>
+			<form action="#" th:action="@{/event-service}" th:object="${event}" method="post">
+				<fieldset>
+					<legend>Get event by Id</legend>
+					<div>
+						<label>
+							<span>Event Id</span>
+						</label>
+						<input type="text" th:field="*{id}" /><br/>
+					</div>
+					<div>
+						<label> Found event: 
+              				<span th:text="${searchResult}">found event</span>
+            			</label> 
+					</div>
+					<div class="submit">
+						<button type="submit" name="getEventById">Get event by Id</button>
+					</div>
+				</fieldset>
+			</form>
+			
+			<form action="#" th:action="@{/event-service}" th:object="${event}" method="post">
+				<fieldset>
+					<legend>Get event by name</legend>
+					<div>
+						<label>
+							<span>Event name</span>
+						</label>
+						<input type="text" th:field="*{name}" /><br/>
+					</div>
+					<div>
+						<label> Found event: 
+              				<span th:text="${searchResult}">found event</span>
+            			</label> 
+					</div>
+					<div class="submit">
+						<button type="submit" name="getEventByName">Get event by name</button>
+						<button type="submit" name="getAllEventsAsPdf">Get all events as PDF</button>
+					</div>
+				</fieldset>
+			</form>
+			
+	</body>
+</html>
