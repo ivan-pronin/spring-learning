@@ -3,12 +3,20 @@ package com.epam.springadvanced.entity;
 import java.time.LocalDate;
 import java.util.List;
 
-public class User {
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
 
+@XmlType
+public class User {
+    @XmlElement(required = true)
     private Long id;
+    
+    @XmlElement(required = true)
     private String name;
     private String email;
     private LocalDate birthday;
+    
+    @XmlElement(required = true)
     private String password;
     private List<Role> roles;
 

@@ -1,25 +1,65 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.4.0.RELEASE")
+    }
+}
+
+def schemaTargetDir = new File('generated-sources')
+
+//schemaTargetDir = new File('build/generated-schema')
+
+configurations {
+  jaxb
+}
+
+repositories {
+  mavenCentral()
+}
+
+task createschemaTargetDir () {
+  schemaTargetDir.mkdirs()
+}
+
+task schemagen (dependsOn: createschemaTargetDir) {
+  doLast {
+    ant.taskdef(name: 'schemagen', classname: 'com.sun.tools.jxc.SchemaGenTask', classpath: configurations.jaxb.asPath)
+    ant.schemagen(srcdir: new File('src/main/java'), destdir: schemaTargetDir, includeAntRuntime:'false')
+  }
+}
+
 apply plugin: 'java'
 apply plugin: 'maven'
 apply plugin: 'eclipse'
 
+
 group = 'com.epam.learning'
 version = '1.0-SNAPSHOT'
 
-description = "Spring advanced booking service skeleton"
+description = "Spring advanced WS-SOAP booking-service"
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
-
-
 repositories {
-        
-     maven { url "http://repo.maven.apache.org/maven2" }
+     mavenCentral()
 }
+
 dependencies {
     compile group: 'org.springframework', name: 'spring-core', version:'4.1.1.RELEASE'
     compile group: 'org.springframework', name: 'spring-context', version:'4.1.1.RELEASE'
     compile group: 'org.springframework', name: 'spring-jdbc', version:'4.1.1.RELEASE'
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '1.4.0.RELEASE'
+	compile group: 'wsdl4j', name: 'wsdl4j', version:'1.6.1'
+	compile group: 'com.sun.xml.bind', name: 'jaxb-xjc', version:'2.2.4-1'	
+	
+	jaxb group: 'com.sun.xml.bind', name: 'jaxb-xjc', version:'2.2.4-1'	
+	
+	
+	compile group: 'javax.xml.bind', name: 'jaxb-api', version: '2.2.4'
+
     compile group: 'org.slf4j', name: 'slf4j-api', version:'1.7.12'
     compile group: 'org.aspectj', name: 'aspectjweaver', version:'1.8.7'
     compile group: 'org.hsqldb', name: 'hsqldb', version:'2.2.9'
@@ -31,4 +71,5 @@ dependencies {
     testCompile group: 'org.mockito', name: 'mockito-all', version:'1.10.19'
     testCompile group: 'org.dbunit', name: 'dbunit', version:'2.5.0'
     testCompile group: 'com.github.springtestdbunit', name: 'spring-test-dbunit', version:'1.2.1'
+	testCompile("org.springframework.boot:spring-boot-starter-test")
 }
