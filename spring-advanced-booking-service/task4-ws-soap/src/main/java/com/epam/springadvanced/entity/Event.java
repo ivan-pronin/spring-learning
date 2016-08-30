@@ -2,25 +2,35 @@ package com.epam.springadvanced.entity;
 
 import java.time.LocalDateTime;
 
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import com.epam.springadvanced.service.Rating;
 
-@XmlType
+// @XmlType(namespace = "http://www.example.org/event")
+// @XmlRootElement(name = "event")
+// @XmlType(name = "")
+@XmlRootElement
 public class Event
 {
-    @XmlElement(required = true)
+
     private Long id;
 
-    @XmlElement(required = true)
     private String name;
-    private LocalDateTime dateTime;
 
-    @XmlElement(required = true)
+    private java.time.LocalDateTime dateTime;
+
     private float ticketPrice;
+
     private Rating rating;
+
     private Auditorium auditorium;
+
+    public Event()
+    {
+
+    }
 
     public Event(long id, String name, LocalDateTime dateTime, float ticketPrice, Rating rating)
     {
@@ -39,6 +49,7 @@ public class Event
         this.rating = rating;
     }
 
+    @XmlAttribute
     public Long getId()
     {
         return id;
@@ -49,6 +60,7 @@ public class Event
         this.id = id;
     }
 
+    @XmlElement
     public String getName()
     {
         return name;
@@ -59,16 +71,19 @@ public class Event
         this.name = name;
     }
 
-    public LocalDateTime getDateTime()
+    @XmlElement
+    public java.time.LocalDateTime getDateTime()
     {
         return dateTime;
     }
 
-    public void setDateTime(LocalDateTime dateTime)
+    public void setDateTime(java.time.LocalDateTime dateTime)
+
     {
         this.dateTime = dateTime;
     }
 
+    @XmlElement
     public float getTicketPrice()
     {
         return ticketPrice;
@@ -79,6 +94,7 @@ public class Event
         this.ticketPrice = ticketPrice;
     }
 
+    @XmlElement
     public Rating getRating()
     {
         return rating;
@@ -89,6 +105,7 @@ public class Event
         this.rating = rating;
     }
 
+    @XmlElement
     public Auditorium getAuditorium()
     {
         return auditorium;

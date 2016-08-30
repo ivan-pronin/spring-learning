@@ -1,33 +1,16 @@
-buildscript {
-    repositories {
-        mavenCentral()
+plugins {
+	id 'java'
+    id 'com.intershop.gradle.jaxb' version '1.0.0'
+}
+
+jaxb {
+    schemaGen {
+        //generates java code for project from project schema
+        name {
+            javaFiles = fileTree(dir: 'src/main/java/', include: 'com/epam/springadvanced/entity/*.java')
+            namespaceconfigs = [ 'http://www.corporate.com/xml/ns/corporate/feature/1.0' : 'feature.xsd' ]
+        }
     }
-    dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.4.0.RELEASE")
-    }
-}
-
-def schemaTargetDir = new File('generated-sources')
-
-//schemaTargetDir = new File('build/generated-schema')
-
-configurations {
-  jaxb
-}
-
-repositories {
-  mavenCentral()
-}
-
-task createschemaTargetDir () {
-  schemaTargetDir.mkdirs()
-}
-
-task schemagen (dependsOn: createschemaTargetDir) {
-  doLast {
-    ant.taskdef(name: 'schemagen', classname: 'com.sun.tools.jxc.SchemaGenTask', classpath: configurations.jaxb.asPath)
-    ant.schemagen(srcdir: new File('src/main/java'), destdir: schemaTargetDir, includeAntRuntime:'false')
-  }
 }
 
 apply plugin: 'java'
@@ -47,19 +30,27 @@ repositories {
      mavenCentral()
 }
 
+    dependencies {
+        jaxb 'com.sun.xml.bind:jaxb-core:2.2.11'
+        jaxb 'com.sun.xml.bind:jaxb-xjc:2.2.11'
+		jaxb 'com.sun.xml.bind:jaxb-jxc:2.2.11'
+       // jaxb 'com.sun.xml.bind:jaxb-impl:2.2.11'
+        //jaxb 'javax.xml.bind:jaxb-api:2.2.11'
+    }
+	
 dependencies {
     compile group: 'org.springframework', name: 'spring-core', version:'4.1.1.RELEASE'
     compile group: 'org.springframework', name: 'spring-context', version:'4.1.1.RELEASE'
     compile group: 'org.springframework', name: 'spring-jdbc', version:'4.1.1.RELEASE'
 	compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '1.4.0.RELEASE'
 	compile group: 'wsdl4j', name: 'wsdl4j', version:'1.6.1'
-	compile group: 'com.sun.xml.bind', name: 'jaxb-xjc', version:'2.2.4-1'	
-	
-	jaxb group: 'com.sun.xml.bind', name: 'jaxb-xjc', version:'2.2.4-1'	
+	//compile group: 'com.sun.xml.bind', name: 'jaxb-xjc', version:'2.2.11'	
 	
 	
-	compile group: 'javax.xml.bind', name: 'jaxb-api', version: '2.2.4'
-
+	//jaxb group: 'com.sun.xml.bind', name: 'jaxb-xjc', version:'2.2.11'		
+	//jaxb group: 'com.sun.xml.bind', name: 'jaxb-core', version:'2.2.11'
+	//jaxb group: 'com.sun.xml.bind', name: 'jaxb-jxc', version:'2.2.11'
+	
     compile group: 'org.slf4j', name: 'slf4j-api', version:'1.7.12'
     compile group: 'org.aspectj', name: 'aspectjweaver', version:'1.8.7'
     compile group: 'org.hsqldb', name: 'hsqldb', version:'2.2.9'
@@ -71,5 +62,4 @@ dependencies {
     testCompile group: 'org.mockito', name: 'mockito-all', version:'1.10.19'
     testCompile group: 'org.dbunit', name: 'dbunit', version:'2.5.0'
     testCompile group: 'com.github.springtestdbunit', name: 'spring-test-dbunit', version:'1.2.1'
-	testCompile("org.springframework.boot:spring-boot-starter-test")
 }
