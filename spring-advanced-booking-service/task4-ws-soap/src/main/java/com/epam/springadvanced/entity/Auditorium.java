@@ -1,17 +1,26 @@
 package com.epam.springadvanced.entity;
 
+import static java.util.stream.Collectors.toList;
+import static java.util.stream.IntStream.rangeClosed;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static java.util.stream.Collectors.toList;
-import static java.util.stream.IntStream.rangeClosed;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
 
+@XmlType(name="auditorium")
 public class Auditorium {
+    @XmlAttribute
     private int id;
+    @XmlElement
     private String name;
+    @XmlElement
     private int numberOfSeats;
+    @XmlElement
     private List<Seat> seats;
 
     public Auditorium(int id) {

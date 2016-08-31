@@ -1,7 +1,13 @@
 package com.epam.springadvanced.entity;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
+
+@XmlType(name="seat")
 public class Seat {
+    @XmlElement
     private int number;
+    @XmlElement
     private boolean vip;
 
     public Seat(int number, boolean vip) {
