@@ -8,26 +8,20 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Stream;
 
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlType;
-
-@XmlType(name="auditorium")
-public class Auditorium {
-    @XmlAttribute
+public class Auditorium
+{
     private int id;
-    @XmlElement
     private String name;
-    @XmlElement
     private int numberOfSeats;
-    @XmlElement
     private List<Seat> seats;
 
-    public Auditorium(int id) {
+    public Auditorium(int id)
+    {
         this.id = id;
     }
 
-    public Auditorium(int id, String name, int numberOfSeats, String vipSeats) {
+    public Auditorium(int id, String name, int numberOfSeats, String vipSeats)
+    {
         this.seats = new ArrayList<>();
         this.id = id;
         this.name = name;
@@ -37,35 +31,43 @@ public class Auditorium {
         rangeClosed(1, numberOfSeats).forEach(n -> seats.add(new Seat(n, vipList.contains(n))));
     }
 
-    public int getId() {
+    public int getId()
+    {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(int id)
+    {
         this.id = id;
     }
 
-    public String getName() {
+    public String getName()
+    {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(String name)
+    {
         this.name = name;
     }
 
-    public long getNumberOfSeats() {
+    public long getNumberOfSeats()
+    {
         return numberOfSeats;
     }
 
-    public void setNumberOfSeats(int numberOfSeats) {
+    public void setNumberOfSeats(int numberOfSeats)
+    {
         this.numberOfSeats = numberOfSeats;
     }
 
-    public List<Seat> getSeats() {
+    public List<Seat> getSeats()
+    {
         return seats;
     }
 
-    public void setSeats(List<Seat> seats) {
+    public void setSeats(List<Seat> seats)
+    {
         this.seats = seats;
     }
 }

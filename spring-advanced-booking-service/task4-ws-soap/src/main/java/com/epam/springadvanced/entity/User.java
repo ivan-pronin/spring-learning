@@ -3,21 +3,25 @@ package com.epam.springadvanced.entity;
 import java.time.LocalDate;
 import java.util.List;
 
-import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-@XmlType(namespace = "http://www.example.org/user")
+import com.epam.springadvanced.xml.adapter.LocalDateAdapter;
+
+@XmlAccessorType(XmlAccessType.NONE)
+@XmlType(name = "user")
 public class User
 {
-    @XmlElement(required = true)
+    @XmlAttribute
     private Long id;
-
-    @XmlElement(required = true)
     private String name;
     private String email;
-    private LocalDate birthday;
 
-    @XmlElement(required = true)
+    @XmlJavaTypeAdapter(LocalDateAdapter.class)
+    private LocalDate birthday;
     private String password;
     private List<Role> roles;
 

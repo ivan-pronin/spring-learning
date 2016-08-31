@@ -1,22 +1,6 @@
-plugins {
-	id 'java'
-    id 'com.intershop.gradle.jaxb' version '1.0.0'
-}
-
-jaxb {
-    schemaGen {
-        //generates java code for project from project schema
-        name {
-            javaFiles = fileTree(dir: 'src/main/java/', include: 'com/epam/springadvanced/entity/*.java')
-            namespaceconfigs = [ 'http://www.corporate.com/xml/ns/corporate/feature/1.0' : 'feature.xsd' ]
-        }
-    }
-}
-
 apply plugin: 'java'
 apply plugin: 'maven'
 apply plugin: 'eclipse'
-
 
 group = 'com.epam.learning'
 version = '1.0-SNAPSHOT'
@@ -29,14 +13,6 @@ targetCompatibility = 1.8
 repositories {
      mavenCentral()
 }
-
-    dependencies {
-        jaxb 'com.sun.xml.bind:jaxb-core:2.2.11'
-        jaxb 'com.sun.xml.bind:jaxb-xjc:2.2.11'
-		jaxb 'com.sun.xml.bind:jaxb-jxc:2.2.11'
-       // jaxb 'com.sun.xml.bind:jaxb-impl:2.2.11'
-        //jaxb 'javax.xml.bind:jaxb-api:2.2.11'
-    }
 	
 dependencies {
     compile group: 'org.springframework', name: 'spring-core', version:'4.1.1.RELEASE'
@@ -44,12 +20,10 @@ dependencies {
     compile group: 'org.springframework', name: 'spring-jdbc', version:'4.1.1.RELEASE'
 	compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '1.4.0.RELEASE'
 	compile group: 'wsdl4j', name: 'wsdl4j', version:'1.6.1'
-	//compile group: 'com.sun.xml.bind', name: 'jaxb-xjc', version:'2.2.11'	
 	
-	
-	//jaxb group: 'com.sun.xml.bind', name: 'jaxb-xjc', version:'2.2.11'		
-	//jaxb group: 'com.sun.xml.bind', name: 'jaxb-core', version:'2.2.11'
-	//jaxb group: 'com.sun.xml.bind', name: 'jaxb-jxc', version:'2.2.11'
+	compile group: 'com.sun.xml.bind', name: 'jaxb-xjc', version:'2.2.11'		
+	compile group: 'com.sun.xml.bind', name: 'jaxb-core', version:'2.2.11'
+	compile group: 'com.sun.xml.bind', name: 'jaxb-jxc', version:'2.2.11'
 	
     compile group: 'org.slf4j', name: 'slf4j-api', version:'1.7.12'
     compile group: 'org.aspectj', name: 'aspectjweaver', version:'1.8.7'

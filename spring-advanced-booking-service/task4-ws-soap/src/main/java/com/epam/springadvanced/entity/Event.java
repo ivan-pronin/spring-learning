@@ -9,8 +9,8 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-import com.epam.springadvanced.DateTimeAdapter;
 import com.epam.springadvanced.service.Rating;
+import com.epam.springadvanced.xml.adapter.LocalDateTimeAdapter;
 
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlType(name="event")
@@ -20,7 +20,7 @@ public class Event
     private Long id;
     @XmlElement
     private String name;
-    @XmlJavaTypeAdapter(DateTimeAdapter.class)
+    @XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
     private java.time.LocalDateTime dateTime;
     @XmlElement
     private float ticketPrice;
