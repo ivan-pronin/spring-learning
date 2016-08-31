@@ -5,6 +5,7 @@ Task description:
 1. Mark User and Event entites with appropriate JAXB annotations to enable JAXB binding.
 
 2. Based on annotated entity classes generate XML schema via schemagen tool. 
+ schemagen -d "build/resources" -cp build/classes/main src/main/java/com/epam/springadvanced/entity/Event.java
 
 3. Generate JAXB-derived service classes using xjc tool.
 

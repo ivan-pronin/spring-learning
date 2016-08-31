@@ -2,29 +2,22 @@ package com.epam.springadvanced.entity;
 
 import java.time.LocalDateTime;
 
-import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
+import com.epam.springadvanced.DateTimeAdapter;
 import com.epam.springadvanced.service.Rating;
 
-// @XmlType(namespace = "http://www.example.org/event")
-// @XmlRootElement(name = "event")
-// @XmlType(name = "")
-@XmlRootElement
+@XmlAccessorType(XmlAccessType.NONE)
 public class Event
 {
-
     private Long id;
-
     private String name;
-
     private java.time.LocalDateTime dateTime;
-
     private float ticketPrice;
-
     private Rating rating;
-
     private Auditorium auditorium;
 
     public Event()
@@ -49,7 +42,6 @@ public class Event
         this.rating = rating;
     }
 
-    @XmlAttribute
     public Long getId()
     {
         return id;
@@ -60,7 +52,6 @@ public class Event
         this.id = id;
     }
 
-    @XmlElement
     public String getName()
     {
         return name;
@@ -70,8 +61,9 @@ public class Event
     {
         this.name = name;
     }
-
+    
     @XmlElement
+    @XmlJavaTypeAdapter(DateTimeAdapter.class)
     public java.time.LocalDateTime getDateTime()
     {
         return dateTime;
@@ -83,7 +75,6 @@ public class Event
         this.dateTime = dateTime;
     }
 
-    @XmlElement
     public float getTicketPrice()
     {
         return ticketPrice;
@@ -94,7 +85,6 @@ public class Event
         this.ticketPrice = ticketPrice;
     }
 
-    @XmlElement
     public Rating getRating()
     {
         return rating;
@@ -105,7 +95,6 @@ public class Event
         this.rating = rating;
     }
 
-    @XmlElement
     public Auditorium getAuditorium()
     {
         return auditorium;
