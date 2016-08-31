@@ -63,3 +63,5 @@ dependencies {
     testCompile group: 'org.dbunit', name: 'dbunit', version:'2.5.0'
     testCompile group: 'com.github.springtestdbunit', name: 'spring-test-dbunit', version:'1.2.1'
 }
+
+"xsd_gen.bat".execute()
