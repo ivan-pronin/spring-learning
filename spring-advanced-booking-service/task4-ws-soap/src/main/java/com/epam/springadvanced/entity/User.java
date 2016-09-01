@@ -12,7 +12,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import com.epam.springadvanced.xml.adapter.LocalDateAdapter;
 
 @XmlAccessorType(XmlAccessType.NONE)
-@XmlType(name = "user")
+@XmlType(namespace = "http://localhost:8080/xml/user", name = "user")
 public class User
 {
     @XmlAttribute

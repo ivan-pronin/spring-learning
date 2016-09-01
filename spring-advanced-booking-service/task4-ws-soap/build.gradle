@@ -18,7 +18,7 @@ dependencies {
     compile group: 'org.springframework', name: 'spring-core', version:'4.1.1.RELEASE'
     compile group: 'org.springframework', name: 'spring-context', version:'4.1.1.RELEASE'
     compile group: 'org.springframework', name: 'spring-jdbc', version:'4.1.1.RELEASE'
-	compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '1.4.0.RELEASE'
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-ws', version: '1.4.0.RELEASE'
 	compile group: 'wsdl4j', name: 'wsdl4j', version:'1.6.1'
 	
 	compile group: 'com.sun.xml.bind', name: 'jaxb-xjc', version:'2.2.11'		

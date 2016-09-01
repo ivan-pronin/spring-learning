@@ -13,7 +13,7 @@ import com.epam.springadvanced.service.Rating;
 import com.epam.springadvanced.xml.adapter.LocalDateTimeAdapter;
 
 @XmlAccessorType(XmlAccessType.NONE)
-@XmlType(name="event")
+@XmlType(namespace = "http://localhost:8080/xml/event", name = "event")
 public class Event
 {
     @XmlAttribute
@@ -68,7 +68,7 @@ public class Event
     {
         this.name = name;
     }
-    
+
     public java.time.LocalDateTime getDateTime()
     {
         return dateTime;
