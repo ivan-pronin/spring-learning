@@ -1,0 +1,45 @@
+Practical Task on REST WS
+
+Time: 5 hours
+
+Expected result: show demonstration and provide code
+
+Task description:
+
+1. Implement REST endpoints for ticket booking operations(required) and user/event CRUD operations(optional) via annotation based controllers. When implementing controllers, use REST design principles.
+
+2. Implement HttpMessageConverter which can write Ticket objects into application/pdf MIME type. Read support is not needed (canRead method should just return false)
+
+3. Configure ContentNegotiationViewResolver via MVC namespace.
+
+Add two types of message converters - 1.newly implemented application/pdf http message converter. 2. Jackson JSON message converter.
+
+4. Implement test client using RestTemplate. By default client should use JSON representation to communicate with REST service.
+
+5. Create test HTTP requests that have Accept header value as application/pdf, test that content negotiation works properly, and PDF representation is returned on any ticket booking request that is supposed to return Ticket object or list of Ticlet objects.
+
+Upload your task for checking with the button just below this text.
+
+=================================================================================
+[8/27/2016 9:33:05 PM] Igor Seliverstov: В четвертом задании мы снова выгружаем проект из гита, что я давал в начале
+[8/27/2016 9:33:33 PM] Igor Seliverstov: И делаем на его основе Spring Boot приложение
+[8/27/2016 9:34:18 PM] Igor Seliverstov: Требования те же что и раньше (минимум xml)
+[8/27/2016 9:36:04 PM] Igor Seliverstov: Для соап проекта необходима xsd схема для генерации wsdl
+[8/27/2016 9:36:35 PM] Igor Seliverstov: Используйте jaxb аннотации на сущностях
+[8/27/2016 9:36:37 PM] Seleznev Artem: Сразу вопрос: почему именно SOAP, а не REST ?
+[8/27/2016 9:37:00 PM] Igor Seliverstov: И плагин для генерации xsd из бинов
+[8/27/2016 9:37:18 PM] Igor Seliverstov: А потому что там ДВА задания))
+[8/27/2016 9:37:41 PM] Igor Seliverstov: Один на REST другой на SOAP
+[8/27/2016 9:37:50 PM] Seleznev Artem: опа
+[8/27/2016 9:37:59 PM] Igor Seliverstov: Я советую сначала делать soap
+[8/27/2016 9:38:07 PM] Seleznev Artem: ок
+[8/27/2016 9:38:07 PM] Igor Seliverstov: Он сложнее
+[8/27/2016 9:39:19 PM] Igor Seliverstov: Xsd схема должна генерироваться на этапе сборки и паковаться в ресурсы
+[8/27/2016 9:39:42 PM] Igor Seliverstov: В генерируемые ресурсы
+[8/27/2016 9:39:57 PM] Igor Seliverstov: А не в те что в папке main
+[8/27/2016 9:41:52 PM] Seleznev Artem: ок. спасибо.
+[8/27/2016 9:46:18 PM] Igor Seliverstov: Вроде все... Аннотации, спринг бут и ни единого xml в проекте, тот что используется в wsdlDefenition должен генерироваться на основании бинов с jaxb аннотациями на этапе сборки и складываться в папку с сгенерированными ресурсами в папке target/out в зависимости от того что используется (мавен или грейдл)
+[8/27/2016 9:46:52 PM] Igor Seliverstov: И от туда паковаться в конечную сборку
+[8/27/2016 9:47:09 PM] Igor Seliverstov: Использование спринг бут плагина обязательно
+[8/27/2016 9:47:53 PM | Edited 9:48:14 PM] Igor Seliverstov: Приложение должно быть jar архивом и запускаться java -jar your.jar
+[8/27/2016 9:48:57 PM] Igor Seliverstov: Теперь точно все))
